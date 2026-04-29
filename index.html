@@ -1003,29 +1003,32 @@
 
     <div class="mobile-nav-bar" id="mobile-nav-bar" style="display:none">
         <div class="m-nav-items">
-            <div class="m-nav-item" onclick="go('home')">
+            <div class="m-nav-item" onclick="go('home')" id="mnav-home">
                 <div class="m-nav-icon">🏠</div>
                 <div>Home</div>
             </div>
-            <div class="m-nav-item" onclick="go('marketplace')">
+            <div class="m-nav-item" onclick="go('marketplace')" id="mnav-marketplace">
                 <div class="m-nav-icon">🛒</div>
                 <div>Buy</div>
             </div>
-            <div class="m-nav-item" onclick="go('create')">
+            <div class="m-nav-item" onclick="go('create')" id="mnav-create">
                 <div class="m-nav-icon"
                     style="background:var(--primary);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;margin-bottom:2px">
                     ➕</div>
                 <div>Sell</div>
             </div>
-            <div class="m-nav-item" onclick="go('dashboard')">
-                <div class="m-nav-icon">👤</div>
-                <div>Profile</div>
-            </div>
-            <div class="m-nav-item" onclick="toggleNotif()">
-                <div class="m-nav-icon" style="position:relative">🔔<span id="m-notif-dot"
+            <div class="m-nav-item" onclick="go('dashboard');setTimeout(()=>dashTab('chats'),300)" id="mnav-messages"
+                style="position:relative">
+                <div class="m-nav-icon" style="position:relative">
+                    💬
+                    <span id="m-msg-dot"
                         style="position:absolute;top:0;right:0;width:8px;height:8px;background:var(--red);border-radius:50%;display:none"></span>
                 </div>
-                <div>Alerts</div>
+                <div>Messages</div>
+            </div>
+            <div class="m-nav-item" onclick="go('dashboard')" id="mnav-profile">
+                <div class="m-nav-icon">👤</div>
+                <div>Profile</div>
             </div>
         </div>
     </div>
