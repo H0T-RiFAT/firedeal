@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>FireDeal – Free Fire ID Marketplace Bangladesh</title>
+<meta name="description" content="Bangladesh এর সবচেয়ে নিরাপদ Free Fire ID কেনাবেচার marketplace।"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0D0D0D;--card:#161616;--card2:#1E1E1E;--border:#2A2A2A;--primary:#FF6B00;--gold:#FFD700;--green:#00C853;--red:#FF4444;--blue:#00BFFF;--sub:#888;--sub2:#444;--r:12px;--rs:8px}
+body{background:var(--bg);color:#fff;font-family:'Hind Siliguri',sans-serif;min-height:100vh;overflow-x:hidden}
+h1,h2,h3,.logo{font-family:'Rajdhani',sans-serif}
+.page{display:none}.page.active{display:block}
+nav{background:#111;border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:62px;position:sticky;top:0;z-index:400}
+.logo{color:var(--primary);font-size:22px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px}
+.nav-links{display:flex;gap:18px}
+.nav-links a{color:var(--sub);font-size:13px;cursor:pointer;transition:color .2s;padding:4px 0;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{color:#fff}
+#announcement-bar{background:linear-gradient(90deg,var(--primary),#ff8c00);padding:8px 20px;text-align:center;font-size:13px;font-weight:600;display:none;position:relative}
+#announcement-bar .close-ann{position:absolute;right:16px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:16px}
+.btn{background:var(--primary);color:#fff;border:none;border-radius:var(--rs);padding:9px 20px;cursor:pointer;font-weight:700;font-size:13px;font-family:'Hind Siliguri',sans-serif;transition:all .2s;display:inline-flex;align-items:center;gap:5px}
+.btn:hover{opacity:.85}.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-out{background:transparent;color:var(--primary);border:1.5px solid var(--primary);border-radius:var(--rs);padding:8px 18px;cursor:pointer;font-weight:700;font-size:13px;font-family:'Hind Siliguri',sans-serif;transition:all .2s}
+.btn-out:hover{background:var(--primary);color:#fff}
+.btn-sm{background:var(--primary);color:#fff;border:none;border-radius:6px;padding:5px 12px;cursor:pointer;font-weight:600;font-size:12px;font-family:'Hind Siliguri',sans-serif}
+.btn-gray{background:#2a2a2a;color:var(--sub);border:1px solid var(--border);border-radius:6px;padding:6px 13px;cursor:pointer;font-size:12px;font-family:'Hind Siliguri',sans-serif}
+.btn-green{background:#00C85322;color:var(--green);border:1px solid var(--green);border-radius:6px;padding:5px 13px;cursor:pointer;font-size:12px;font-family:'Hind Siliguri',sans-serif}
+.btn-red{background:#FF444422;color:var(--red);border:1px solid var(--red);border-radius:6px;padding:5px 13px;cursor:pointer;font-size:12px;font-family:'Hind Siliguri',sans-serif}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r)}
+.card2{background:var(--card2);border:1px solid var(--border);border-radius:10px}
+.badge{border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;display:inline-block}
+.badge-blue{background:#00BFFF22;color:var(--blue);border:1px solid var(--blue)}
+.badge-green{background:#00C85322;color:var(--green);border:1px solid var(--green)}
+.badge-orange{background:#FF6B0022;color:var(--primary);border:1px solid var(--primary)}
+.badge-gold{background:#FFD70022;color:var(--gold);border:1px solid var(--gold)}
+.badge-red{background:#FF444422;color:var(--red);border:1px solid var(--red)}
+.badge-purple{background:#9B59B622;color:#9B59B6;border:1px solid #9B59B6}
+input,select,textarea{background:#1A1A1A;border:1px solid var(--border);border-radius:var(--rs);padding:10px 14px;color:#fff;font-size:14px;width:100%;outline:none;font-family:'Hind Siliguri',sans-serif;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--primary)}
+select option{background:#1A1A1A}
+textarea{resize:vertical;min-height:80px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:12px;font-weight:600;margin-bottom:5px;color:#bbb}
+.tag{background:#222;border:1px solid var(--border);border-radius:6px;padding:3px 9px;font-size:11px;color:var(--sub);display:inline-block}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.section{max-width:1100px;margin:0 auto;padding:40px 20px}
+.section-sm{max-width:560px;margin:0 auto;padding:36px 20px}
+.listing-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);cursor:pointer;overflow:hidden;transition:border-color .2s,transform .2s}
+.listing-card:hover{border-color:var(--primary);transform:translateY(-2px)}
+.listing-card .thumb{background:linear-gradient(135deg,#1A1A1A,#252525);height:130px;display:flex;align-items:center;justify-content:center;font-size:54px;position:relative}
+.chat-bubble{display:flex;margin-bottom:6px}
+.chat-bubble.me{justify-content:flex-end}
+.chat-bubble .msg{border-radius:14px;padding:8px 13px;max-width:75%;font-size:13px;line-height:1.5}
+.chat-bubble.them .msg{background:#252525;border-radius:14px 14px 14px 4px}
+.chat-bubble.me .msg{background:var(--primary);border-radius:14px 14px 4px 14px}
+.chat-bubble.admin-msg .msg{background:#00BFFF11;border:1px solid var(--blue);border-radius:14px}
+.chat-bubble.system-msg{justify-content:center}
+.chat-bubble.system-msg .msg{background:#FF6B0011;border:1px solid #FF6B0044;border-radius:8px;text-align:center;font-size:12px;color:var(--primary)}
+.admin-wrap{display:flex;min-height:calc(100vh - 62px)}
+.admin-sidebar{width:210px;background:#111;border-right:1px solid var(--border);padding:14px 0;flex-shrink:0}
+.admin-sidebar .s-item{padding:11px 16px;cursor:pointer;border-left:3px solid transparent;color:var(--sub);font-size:13px;transition:all .2s;display:flex;align-items:center;gap:8px}
+.admin-sidebar .s-item:hover,.admin-sidebar .s-item.active{background:#1E1E1E;border-left-color:var(--primary);color:#fff}
+.admin-content{flex:1;padding:24px;overflow-y:auto}
+.loading{display:flex;align-items:center;justify-content:center;padding:60px;color:var(--sub);font-size:14px}
+.spin{width:22px;height:22px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .7s linear infinite;margin-right:10px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.notif-bell{position:relative;cursor:pointer;padding:7px 9px;border-radius:8px;transition:background .2s;font-size:17px}
+.notif-bell:hover{background:#2A2A2A}
+.notif-dot{position:absolute;top:5px;right:5px;width:8px;height:8px;background:var(--red);border-radius:50%;display:none;border:2px solid #111}
+.notif-dot.show{display:block}
+#notif-dropdown{position:absolute;top:62px;right:16px;width:330px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);z-index:500;display:none;box-shadow:0 12px 40px #000c}
+#notif-dropdown.show{display:block}
+.notif-item{padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;font-size:13px}
+.notif-item:hover{background:var(--card2)}
+.notif-item.unread{background:#FF6B0008;border-left:3px solid var(--primary)}
+.notif-item:last-child{border-bottom:none}
+#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#1A1A1A;border:1px solid var(--primary);border-radius:10px;padding:12px 24px;font-size:13px;color:#fff;z-index:9999;display:none;white-space:nowrap;box-shadow:0 4px 28px #000c;animation:toastIn .2s ease}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.modal-overlay{position:fixed;inset:0;background:#000d;display:none;align-items:center;justify-content:center;z-index:600;padding:20px}
+.modal-overlay.show{display:flex}
+.modal-box{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:26px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto}
+.hero{background:radial-gradient(ellipse at 50% 30%,#FF6B0022 0%,transparent 65%),linear-gradient(160deg,#0D0D0D,#1C0800,#0D0D0D);padding:80px 20px 60px;text-align:center}
+.hero h1{font-size:clamp(28px,5vw,60px);font-weight:900;line-height:1.1;margin-bottom:14px}
+.hero h1 span{color:var(--primary)}
+.dash-nav-item{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;border-left:3px solid transparent;color:var(--sub);font-size:13px;font-weight:600;transition:all .15s;margin:1px 8px 1px 0;border-radius:0 8px 8px 0}
+.dash-nav-item:hover{background:#1A1A1A;color:#fff;border-left-color:#444}
+.dash-nav-item.active{background:#FF6B0015;color:var(--primary);border-left-color:var(--primary)}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:20px;position:relative;overflow:hidden}
+.stat-card .bg-icon{position:absolute;right:-6px;bottom:-6px;font-size:52px;opacity:.05;pointer-events:none}
+.progress-bar{height:5px;background:#222;border-radius:3px;overflow:hidden;margin-top:5px}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),#ff8c00);border-radius:3px;transition:width .4s ease}
+.scam-warn{background:#FF444411;border:1px solid #FF444444;border-radius:8px;padding:11px 14px;font-size:12px;color:#FF8888;line-height:1.6}
+.seller-level{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:20px;font-size:10px;font-weight:700}
+.mobile-nav-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:#111;border-top:1px solid var(--border);z-index:300;padding:6px 0}
+.mobile-nav-bar .m-nav-items{display:flex;justify-content:space-around}
+.mobile-nav-bar .m-nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--sub);cursor:pointer;padding:4px 8px;border-radius:8px;transition:color .15s}
+.mobile-nav-bar .m-nav-item.active,.mobile-nav-bar .m-nav-item:hover{color:var(--primary)}
+.mobile-nav-bar .m-nav-icon{font-size:20px}
+.step-dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+.step-line{width:40px;height:3px}
+footer{background:#0A0A0A;border-top:1px solid var(--border);padding:40px 20px 20px}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:28px;max-width:1100px;margin:0 auto 30px}
+.footer-col h4{font-size:14px;font-weight:700;margin-bottom:12px;color:#fff}
+.footer-col a{display:block;color:var(--sub);font-size:13px;margin-bottom:7px;cursor:pointer;transition:color .2s}
+.footer-col a:hover{color:var(--primary)}
+.share-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:opacity .2s}
+.share-btn:hover{opacity:.85}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .admin-sidebar{width:52px}
+  .admin-sidebar .s-item span:last-child{display:none}
+  .admin-sidebar .s-item{padding:12px;justify-content:center}
+  #dash-sidebar{width:52px}
+  #dash-sidebar .dash-nav-item span:not(:first-child){display:none}
+  #dash-sidebar .dash-nav-item{padding:10px;justify-content:center;margin:1px 4px}
+  #dash-sidebar .sidebar-profile{display:none}
+  .mobile-nav-bar{display:block}
+  body{padding-bottom:64px}
+  .hero h1{font-size:26px}
+  .listing-detail-grid{grid-template-columns:1fr!important}
+}
+@media(max-width:500px){.grid-2{grid-template-columns:1fr}.modal-box{padding:18px}}
+</style>
+</head>
+<body>
+
+<div id="announcement-bar"><span id="ann-text"></span><span class="close-ann" onclick="document.getElementById('announcement-bar').style.display='none'">✕</span></div>
+
+<nav id="main-nav" style="display:none">
+  <div class="logo" onclick="go('home')">🔥 FireDeal</div>
+  <div class="nav-links">
+    <a onclick="go('marketplace')" id="nav-marketplace">🛒 মার্কেটপ্লেস</a>
+    <a onclick="go('how')" id="nav-how">কীভাবে কাজ করে</a>
+    <a onclick="go('faq')" id="nav-faq">FAQ</a>
+    <a onclick="go('contact')" id="nav-contact">Contact</a>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;position:relative" id="nav-auth-area"></div>
+  <div id="notif-dropdown">
+    <div style="padding:13px 16px;border-bottom:1px solid var(--border);font-weight:700;font-size:13px;display:flex;justify-content:space-between;align-items:center">🔔 Notifications<span style="color:var(--primary);cursor:pointer;font-size:12px" onclick="clearNotifs()">সব পড়া হয়েছে</span></div>
+    <div id="notif-list" style="max-height:360px;overflow-y:auto"><div style="padding:24px;text-align:center;color:var(--sub);font-size:13px">কোনো notification নেই</div></div>
+  </div>
+</nav>
+
+<div class="mobile-nav-bar" id="mobile-nav-bar" style="display:none">
+  <div class="m-nav-items">
+    <div class="m-nav-item" onclick="go('home')"><div class="m-nav-icon">🏠</div><div>Home</div></div>
+    <div class="m-nav-item" onclick="go('marketplace')"><div class="m-nav-icon">🛒</div><div>Buy</div></div>
+    <div class="m-nav-item" onclick="go('create')"><div class="m-nav-icon" style="background:var(--primary);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;margin-bottom:2px">➕</div><div>Sell</div></div>
+    <div class="m-nav-item" onclick="go('dashboard')"><div class="m-nav-icon">👤</div><div>Profile</div></div>
+    <div class="m-nav-item" onclick="toggleNotif()"><div class="m-nav-icon" style="position:relative">🔔<span id="m-notif-dot" style="position:absolute;top:0;right:0;width:8px;height:8px;background:var(--red);border-radius:50%;display:none"></span></div><div>Alerts</div></div>
+  </div>
+</div>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div style="font-size:11px;color:var(--primary);font-weight:700;letter-spacing:3px;margin-bottom:14px">🇧🇩 BANGLADESH'S #1 TRUSTED PLATFORM</div>
+    <h1>Free Fire ID<br><span>নিরাপদে কিনুন বা বিক্রি করুন</span></h1>
+    <p style="color:var(--sub);font-size:15px;max-width:460px;margin:12px auto 32px;line-height:1.8">Scam নেই। ভয় নেই। Admin Escrow সিস্টেমে ১০০% নিরাপদ লেনদেন।</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:50px">
+      <button class="btn" style="padding:14px 32px;font-size:15px" onclick="go('marketplace')">🛒 ID কিনুন</button>
+      <button class="btn-out" style="padding:14px 32px;font-size:15px" onclick="go('create')">💰 ID বিক্রি করুন</button>
+    </div>
+    <div style="display:flex;gap:36px;justify-content:center;flex-wrap:wrap">
+      <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--primary);font-family:'Rajdhani',sans-serif" id="stat-users">লোড...</div><div style="font-size:11px;color:var(--sub)">Verified Users</div></div>
+      <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--primary);font-family:'Rajdhani',sans-serif" id="stat-listings">লোড...</div><div style="font-size:11px;color:var(--sub)">Active Listings</div></div>
+      <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--primary);font-family:'Rajdhani',sans-serif" id="stat-deals">লোড...</div><div style="font-size:11px;color:var(--sub)">Deals Done</div></div>
+      <div style="text-align:center"><div style="font-size:28px;font-weight:900;color:var(--primary);font-family:'Rajdhani',sans-serif">৳৫০ লাখ+</div><div style="font-size:11px;color:var(--sub)">Transacted</div></div>
+    </div>
+  </div>
+  <div class="section">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h2 style="font-size:20px;font-weight:800">🔥 সাম্প্রতিক Listings</h2>
+      <span style="color:var(--primary);cursor:pointer;font-size:13px;font-weight:600" onclick="go('marketplace')">সব দেখুন →</span>
+    </div>
+    <div class="grid-2" id="home-listings"><div class="loading"><div class="spin"></div>লোড হচ্ছে...</div></div>
+  </div>
+  <div style="background:#0F0F0F;padding:50px 20px">
+    <div style="max-width:960px;margin:0 auto">
+      <h2 style="text-align:center;font-size:22px;margin-bottom:8px">কীভাবে কাজ করে?</h2>
+      <p style="text-align:center;color:var(--sub);font-size:13px;margin-bottom:36px">মাত্র ৫টি ধাপে নিরাপদ লেনদেন</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px">
+        <div class="card2" style="padding:20px;text-align:center"><div style="width:40px;height:40px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;margin:0 auto 12px">১</div><div style="font-weight:700;font-size:13px;margin-bottom:5px">Deal Confirm</div><div style="color:var(--sub);font-size:11px;line-height:1.5">Buyer ও Seller দাম ঠিক করেন</div></div>
+        <div class="card2" style="padding:20px;text-align:center"><div style="width:40px;height:40px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;margin:0 auto 12px">২</div><div style="font-weight:700;font-size:13px;margin-bottom:5px">Admin যোগ দেন</div><div style="color:var(--sub);font-size:11px;line-height:1.5">3-way group chat শুরু হয়</div></div>
+        <div class="card2" style="padding:20px;text-align:center"><div style="width:40px;height:40px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;margin:0 auto 12px">৩</div><div style="font-weight:700;font-size:13px;margin-bottom:5px">Payment</div><div style="color:var(--sub);font-size:11px;line-height:1.5">Buyer Admin কে bKash/Nagad এ টাকা পাঠান</div></div>
+        <div class="card2" style="padding:20px;text-align:center"><div style="width:40px;height:40px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;margin:0 auto 12px">৪</div><div style="font-weight:700;font-size:13px;margin-bottom:5px">ID Transfer</div><div style="color:var(--sub);font-size:11px;line-height:1.5">Admin নিরাপদে ID দেন</div></div>
+        <div class="card2" style="padding:20px;text-align:center"><div style="width:40px;height:40px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;margin:0 auto 12px">৫</div><div style="font-weight:700;font-size:13px;margin-bottom:5px">Complete</div><div style="color:var(--sub);font-size:11px;line-height:1.5">Rating ও review দেওয়া হয়</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <h2 style="text-align:center;font-size:22px;margin-bottom:28px">কেন FireDeal বেছে নেবেন?</h2>
+    <div class="grid-4">
+      <div class="card" style="padding:20px;text-align:center"><div style="font-size:32px;margin-bottom:10px">🛡️</div><div style="font-weight:700;font-size:14px;margin-bottom:6px">Admin Escrow</div><div style="color:var(--sub);font-size:12px;line-height:1.6">টাকা সরাসরি seller কে নয়, admin এর মাধ্যমে</div></div>
+      <div class="card" style="padding:20px;text-align:center"><div style="font-size:32px;margin-bottom:10px">✅</div><div style="font-weight:700;font-size:14px;margin-bottom:6px">Verified Users</div><div style="color:var(--sub);font-size:12px;line-height:1.6">Face video ও Facebook verify বাধ্যতামূলক</div></div>
+      <div class="card" style="padding:20px;text-align:center"><div style="font-size:32px;margin-bottom:10px">⭐</div><div style="font-weight:700;font-size:14px;margin-bottom:6px">Rating System</div><div style="color:var(--sub);font-size:12px;line-height:1.6">প্রতিটি deal শেষে review দেওয়া যায়</div></div>
+      <div class="card" style="padding:20px;text-align:center"><div style="font-size:32px;margin-bottom:10px">⚡</div><div style="font-weight:700;font-size:14px;margin-bottom:6px">Fast Deal</div><div style="color:var(--sub);font-size:12px;line-height:1.6">সাধারণত ১–৬ ঘন্টায় deal সম্পন্ন</div></div>
+    </div>
+  </div>
+  <div style="background:#0F0F0F;padding:50px 20px">
+    <div style="max-width:900px;margin:0 auto">
+      <h2 style="text-align:center;font-size:22px;margin-bottom:36px">ব্যবহারকারীরা কী বলেন?</h2>
+      <div class="grid-3">
+        <div class="card" style="padding:20px"><div style="color:var(--gold);font-size:16px;margin-bottom:10px">⭐⭐⭐⭐⭐</div><p style="color:var(--sub);font-size:13px;line-height:1.7;margin-bottom:12px">"সত্যিই অসাধারণ service! Admin খুব helpful। Scam এর কোনো ভয় ছিল না।"</p><div style="font-weight:600;font-size:13px">@RaZeR_BD</div></div>
+        <div class="card" style="padding:20px"><div style="color:var(--gold);font-size:16px;margin-bottom:10px">⭐⭐⭐⭐⭐</div><p style="color:var(--sub);font-size:13px;line-height:1.7;margin-bottom:12px">"Heroic account বিক্রি করেছি। Payment পেতে মাত্র ২ ঘন্টা!"</p><div style="font-weight:600;font-size:13px">@ProGamer_BD</div></div>
+        <div class="card" style="padding:20px"><div style="color:var(--gold);font-size:16px;margin-bottom:10px">⭐⭐⭐⭐⭐</div><p style="color:var(--sub);font-size:13px;line-height:1.7;margin-bottom:12px">"Facebook এ scam হয়েছিলাম। FireDeal এ নিরাপদে ID কিনেছি।"</p><div style="font-weight:600;font-size:13px">@BDLegend_07</div></div>
+      </div>
+    </div>
+  </div>
+  <div style="background:linear-gradient(135deg,#1C0800,#0D0D0D);padding:60px 20px;text-align:center">
+    <h2 style="font-size:28px;margin-bottom:10px">আজই শুরু করুন</h2>
+    <p style="color:var(--sub);margin-bottom:28px;font-size:14px">রেজিস্ট্রেশন সম্পূর্ণ বিনামূল্যে</p>
+    <button class="btn" style="padding:14px 40px;font-size:15px" onclick="go('register')">🔥 ফ্রি রেজিস্ট্রেশন করুন</button>
+  </div>
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col"><div class="logo" style="margin-bottom:12px;font-size:20px">🔥 FireDeal</div><p style="color:var(--sub);font-size:12px;line-height:1.7">Bangladesh এর সবচেয়ে নিরাপদ Free Fire ID marketplace।</p></div>
+      <div class="footer-col"><h4>Quick Links</h4><a onclick="go('marketplace')">মার্কেটপ্লেস</a><a onclick="go('how')">কীভাবে কাজ করে</a><a onclick="go('create')">ID বিক্রি করুন</a><a onclick="go('register')">রেজিস্ট্রেশন</a></div>
+      <div class="footer-col"><h4>Support</h4><a onclick="go('faq')">FAQ</a><a onclick="go('contact')">Contact Us</a><a onclick="go('terms')">Terms of Service</a><a onclick="go('privacy')">Privacy Policy</a></div>
+      <div class="footer-col"><h4>যোগাযোগ</h4><a>📘 Facebook Page</a><a>💬 WhatsApp Support</a><a>📧 firedeal.bd@gmail.com</a></div>
+    </div>
+    <div style="max-width:1100px;margin:0 auto;padding-top:20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+      <div style="color:var(--sub);font-size:12px">© 2025 FireDeal. All rights reserved.</div>
+      <div style="color:var(--sub);font-size:12px">Made with ❤️ for Bangladesh 🇧🇩</div>
+    </div>
+  </footer>
+</div>
+
+<!-- MARKETPLACE -->
+<div id="page-marketplace" class="page">
+  <div class="section" style="padding-top:24px">
+    <h1 style="font-size:22px;font-weight:800;margin-bottom:4px">🛒 মার্কেটপ্লেস</h1>
+    <p style="color:var(--sub);font-size:12px;margin-bottom:18px" id="mp-count">লোড হচ্ছে...</p>
+    <div class="card2" style="padding:12px;margin-bottom:18px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <input type="text" id="mp-search" placeholder="🔍 ID খুঁজুন..." style="max-width:220px" oninput="filterMP()"/>
+      <select id="mp-rank" style="max-width:140px" onchange="filterMP()"><option value="">সব Rank</option><option>Grandmaster</option><option>Heroic</option><option>Diamond</option><option>Platinum</option><option>Gold</option><option>Silver</option><option>Bronze</option></select>
+      <select id="mp-sort" style="max-width:160px" onchange="filterMP()"><option value="new">নতুন আগে</option><option value="low">দাম কম → বেশি</option><option value="high">দাম বেশি → কম</option></select>
+      <select id="mp-price-max" style="max-width:150px" onchange="filterMP()"><option value="">সব দাম</option><option value="1000">৳১,০০০ এর নিচে</option><option value="5000">৳৫,০০০ এর নিচে</option><option value="10000">৳১০,০০০ এর নিচে</option><option value="20000">৳২০,০০০ এর নিচে</option></select>
+      <button class="btn" style="padding:8px 16px;font-size:12px;margin-left:auto" onclick="go('create')">+ নতুন পোস্ট</button>
+    </div>
+    <div class="grid-2" id="mp-listings"><div class="loading"><div class="spin"></div>লোড হচ্ছে...</div></div>
+    <div id="mp-empty" style="display:none;text-align:center;color:var(--sub);padding:60px"><div style="font-size:48px;margin-bottom:14px">🔍</div>কোনো listing পাওয়া যায়নি।</div>
+  </div>
+</div>
+
+<!-- LISTING DETAIL -->
+<div id="page-listing" class="page">
+  <div style="max-width:1000px;margin:0 auto;padding:22px 20px">
+    <button onclick="go('marketplace')" style="background:transparent;color:var(--sub);border:none;cursor:pointer;font-size:13px;margin-bottom:16px;padding:0;font-family:'Hind Siliguri',sans-serif">← মার্কেটপ্লেসে ফিরুন</button>
+    <div id="listing-detail-content"><div class="loading"><div class="spin"></div>লোড হচ্ছে...</div></div>
+  </div>
+</div>
+
+<!-- CREATE -->
+<div id="page-create" class="page">
+  <div class="section-sm">
+    <h1 style="font-size:20px;font-weight:800;margin-bottom:4px">📋 নতুন Listing</h1>
+    <p style="color:var(--sub);font-size:12px;margin-bottom:22px">আপনার Free Fire ID এর তথ্য দিন</p>
+    <div class="card" style="padding:24px">
+      <div class="form-group"><label>Post Title *</label><input type="text" id="c-title" placeholder="যেমনঃ Heroic Rank – DJ Alok + Chrono"/></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="form-group"><label>Rank *</label><select id="c-rank"><option>Grandmaster</option><option>Heroic</option><option>Diamond</option><option>Platinum</option><option>Gold</option><option>Silver</option><option>Bronze</option></select></div>
+        <div class="form-group"><label>Level *</label><input type="number" id="c-level" placeholder="যেমনঃ 65" min="1"/></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="form-group"><label>Diamonds খরচ</label><input type="number" id="c-diamonds" placeholder="যেমনঃ 8500" min="0"/></div>
+        <div class="form-group"><label>Bind Type</label><select id="c-bind"><option>Google</option><option>Facebook</option><option>VK</option><option>Guest</option></select></div>
+      </div>
+      <div class="form-group"><label>চাওয়া মূল্য (BDT) *</label><input type="number" id="c-price" placeholder="যেমনঃ 9500" min="0"/></div>
+      <div class="form-group"><label>Characters (comma দিয়ে)</label><input type="text" id="c-chars" placeholder="যেমনঃ DJ Alok, Chrono, Skyler"/></div>
+      <div class="form-group"><label>বিবরণ *</label><textarea id="c-desc" placeholder="Account এর details লিখুন – skins, rank history..."></textarea></div>
+      <div class="scam-warn" style="margin-bottom:16px">⚠️ Verified না হলে listing করা যাবে না।</div>
+      <button class="btn" style="width:100%;padding:12px;font-size:14px;justify-content:center" id="create-btn" onclick="createListing()">✅ Listing Publish করুন</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT LISTING -->
+<div id="page-edit-listing" class="page">
+  <div class="section-sm">
+    <button onclick="go('dashboard')" style="background:transparent;color:var(--sub);border:none;cursor:pointer;font-size:13px;margin-bottom:16px;padding:0;font-family:'Hind Siliguri',sans-serif">← ড্যাশবোর্ডে ফিরুন</button>
+    <h1 style="font-size:20px;font-weight:800;margin-bottom:20px">✏️ Listing Edit</h1>
+    <div class="card" style="padding:24px">
+      <input type="hidden" id="el-id"/>
+      <div class="form-group"><label>Title *</label><input type="text" id="el-title"/></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="form-group"><label>Rank</label><select id="el-rank"><option>Grandmaster</option><option>Heroic</option><option>Diamond</option><option>Platinum</option><option>Gold</option><option>Silver</option><option>Bronze</option></select></div>
+        <div class="form-group"><label>Level</label><input type="number" id="el-level" min="1"/></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="form-group"><label>Diamonds</label><input type="number" id="el-diamonds" min="0"/></div>
+        <div class="form-group"><label>Bind</label><select id="el-bind"><option>Google</option><option>Facebook</option><option>VK</option><option>Guest</option></select></div>
+      </div>
+      <div class="form-group"><label>মূল্য (BDT) *</label><input type="number" id="el-price" min="0"/></div>
+      <div class="form-group"><label>বিবরণ *</label><textarea id="el-desc"></textarea></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn" style="flex:1;padding:12px;justify-content:center" id="edit-listing-btn" onclick="saveEditListing()">✅ Update করুন</button>
+        <button class="btn-red" style="padding:12px 18px;border-radius:8px" onclick="deleteListing()">🗑 Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAT -->
+<div id="page-chat" class="page">
+  <div style="max-width:720px;margin:0 auto;padding:16px">
+    <button onclick="go('listing')" style="background:transparent;color:var(--sub);border:none;cursor:pointer;font-size:13px;margin-bottom:12px;padding:0;font-family:'Hind Siliguri',sans-serif">← Listing এ ফিরুন</button>
+    <div class="card" style="overflow:hidden">
+      <div style="padding:13px 16px;border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:center;background:#111">
+        <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#ff8c00);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">👤</div>
+        <div style="flex:1"><div style="font-weight:700;font-size:14px" id="chat-with">Seller</div><div style="color:var(--blue);font-size:11px">✓ Verified</div></div>
+        <span id="chat-rank-badge" class="badge badge-orange"></span>
+        <button id="chat-fav-btn" style="background:transparent;border:1px solid #333;border-radius:6px;padding:5px 10px;cursor:pointer;font-size:14px;color:#aaa" onclick="chatToggleFav()">🤍</button>
+      </div>
+      <div id="chat-msgs" style="height:370px;overflow-y:auto;padding:14px;background:var(--bg);display:flex;flex-direction:column;gap:4px"><div class="loading"><div class="spin"></div>লোড হচ্ছে...</div></div>
+      <div id="counter-offer-bar" style="display:none;margin:0 12px;background:#1A1A1A;border-radius:8px;padding:12px;border:1px solid var(--border)">
+        <div style="font-size:11px;color:var(--primary);font-weight:700;margin-bottom:6px">💰 Counter Offer</div>
+        <div style="display:flex;gap:8px"><input type="number" id="counter-offer-input" placeholder="আপনার offer মূল্য" style="flex:1"/><button class="btn-sm" onclick="sendCounterOffer()">পাঠান</button><button class="btn-gray" onclick="document.getElementById('counter-offer-bar').style.display='none'">✕</button></div>
+      </div>
+      <div id="deal-confirm-section" style="margin:0 12px 10px;background:var(--card2);border-left:3px solid var(--primary);border-radius:0 8px 8px 0;padding:12px 14px">
+        <div style="font-size:11px;color:var(--primary);font-weight:700;margin-bottom:4px">Deal Confirm করুন</div>
+        <div style="font-size:11px;color:var(--sub);margin-bottom:8px">দাম ঠিক হলে Deal Confirm করুন। Admin যোগ দেবেন।</div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-sm" id="deal-confirm-btn" onclick="confirmDeal()">✅ Deal Confirm করুন</button>
+          <button class="btn-gray" onclick="document.getElementById('counter-offer-bar').style.display='block'">💱 Counter Offer</button>
+        </div>
+      </div>
+      <div style="padding:10px 12px;border-top:1px solid var(--border);display:flex;gap:8px;background:#111">
+        <input type="text" id="chat-input" placeholder="মেসেজ লিখুন..." style="flex:1" onkeydown="if(event.key==='Enter')sendMsg()"/>
+        <button class="btn-sm" onclick="sendMsg()" style="padding:8px 14px">পাঠান</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REGISTER -->
+<div id="page-register" class="page">
+  <div class="section-sm">
+    <div style="text-align:center;margin-bottom:22px"><div style="font-size:36px;margin-bottom:6px">🔥</div><h1 style="font-size:22px;font-weight:800">অ্যাকাউন্ট খুলুন</h1><p style="color:var(--sub);font-size:13px;margin-top:4px">নিরাপদ লেনদেনের জন্য রেজিস্ট্রেশন করুন</p></div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:24px" id="reg-steps-ui"></div>
+    <div class="card" style="padding:24px">
+      <div id="reg-step1">
+        <div style="font-weight:700;margin-bottom:16px;color:var(--primary)">ধাপ ১ – মূল তথ্য</div>
+        <div class="form-group"><label>পুরো নাম *</label><input type="text" id="r-name" placeholder="Md Rahim"/></div>
+        <div class="form-group"><label>ইউজারনেম * (a-z 0-9 _ শুধু)</label><input type="text" id="r-user" placeholder="rahim_ff"/></div>
+        <div class="form-group"><label>ইমেইল *</label><input type="email" id="r-email" placeholder="email@gmail.com"/></div>
+        <div class="form-group"><label>পাসওয়ার্ড * (কমপক্ষে ৮ অক্ষর)</label><input type="password" id="r-pass" placeholder="পাসওয়ার্ড"/></div>
+        <button class="btn" style="width:100%;padding:12px;justify-content:center" onclick="regStep(2)">পরবর্তী ধাপ →</button>
+      </div>
+      <div id="reg-step2" style="display:none">
+        <div style="font-weight:700;margin-bottom:16px;color:var(--primary)">ধাপ ২ – যোগাযোগ</div>
+        <div class="form-group"><label>WhatsApp নম্বর *</label><input type="tel" id="r-wa" placeholder="+8801XXXXXXXXX"/></div>
+        <div class="form-group"><label>Real Facebook Profile Link *</label><input type="url" id="r-fb" placeholder="https://facebook.com/yourprofile"/></div>
+        <div style="background:#00C85311;border:1px solid var(--green);border-radius:8px;padding:12px;margin-bottom:14px;font-size:12px;color:#ccc;line-height:1.6">✅ WhatsApp ও Facebook দিয়ে পরিচয় verify করা হবে।</div>
+        <div style="display:flex;gap:8px"><button class="btn-out" style="flex:1;padding:11px" onclick="regStep(1)">← আগে</button><button class="btn" style="flex:1;padding:11px;justify-content:center" onclick="regStep(3)">পরবর্তী →</button></div>
+      </div>
+      <div id="reg-step3" style="display:none">
+        <div style="font-weight:700;margin-bottom:8px;color:var(--primary)">ধাপ ৩ – Face Video Verification</div>
+        <p style="color:var(--sub);font-size:12px;margin-bottom:16px;line-height:1.7">পরিচয় নিশ্চিত করতে একটি selfie video আপলোড করুন (৫–১৫ সেকেন্ড)।</p>
+        <div style="background:#1A1A1A;border:2px dashed #FF6B0055;border-radius:8px;padding:24px;text-align:center;margin-bottom:14px">
+          <div style="font-size:36px;margin-bottom:8px">🎥</div>
+          <input type="file" id="r-video" accept="video/*" style="background:transparent;border:none;padding:0;font-size:12px;color:var(--sub)"/>
+          <div style="font-size:11px;color:var(--sub);margin-top:4px">MP4 / MOV • সর্বোচ্চ 50MB</div>
+        </div>
+        <div style="background:#FFD70011;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:12px;margin-bottom:16px;font-size:11px;color:var(--sub);line-height:1.6">⚠️ ভুয়া তথ্য দিলে account permanently ban হবে।</div>
+        <div style="display:flex;gap:8px"><button class="btn-out" style="flex:1;padding:11px" onclick="regStep(2)">← আগে</button><button class="btn" style="flex:1;padding:11px;justify-content:center" id="reg-submit-btn" onclick="doRegister()">✅ রেজিস্ট্রেশন করুন</button></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:14px;color:var(--sub);font-size:12px">আগে account আছে? <span style="color:var(--primary);cursor:pointer" onclick="go('login')">লগইন করুন</span></div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div id="page-login" class="page">
+  <div style="max-width:380px;margin:50px auto;padding:0 20px">
+    <div style="text-align:center;margin-bottom:22px"><div style="font-size:36px;margin-bottom:6px">🔥</div><h1 style="font-size:22px;font-weight:800">লগইন করুন</h1></div>
+    <div class="card" style="padding:26px">
+      <div class="form-group"><label>ইমেইল</label><input type="email" id="l-email" placeholder="email@gmail.com"/></div>
+      <div class="form-group"><label>পাসওয়ার্ড</label><input type="password" id="l-pass" placeholder="পাসওয়ার্ড" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+      <div style="text-align:right;margin-bottom:16px"><span style="color:var(--primary);font-size:12px;cursor:pointer" onclick="go('forgot')">পাসওয়ার্ড ভুলে গেছেন?</span></div>
+      <button class="btn" style="width:100%;padding:12px;margin-bottom:12px;justify-content:center" id="login-btn" onclick="doLogin()">লগইন করুন</button>
+      <div style="text-align:center;color:var(--sub);font-size:12px">account নেই? <span style="color:var(--primary);cursor:pointer" onclick="go('register')">রেজিস্ট্রেশন করুন</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- FORGOT PASSWORD -->
+<div id="page-forgot" class="page">
+  <div style="max-width:380px;margin:50px auto;padding:0 20px">
+    <div style="text-align:center;margin-bottom:22px"><div style="font-size:36px;margin-bottom:6px">🔑</div><h1 style="font-size:20px;font-weight:800">পাসওয়ার্ড Reset</h1></div>
+    <div class="card" style="padding:26px">
+      <div class="form-group"><label>ইমেইল</label><input type="email" id="forgot-email" placeholder="email@gmail.com"/></div>
+      <button class="btn" style="width:100%;padding:12px;margin-bottom:12px;justify-content:center" onclick="doForgot()">Reset Link পাঠান</button>
+      <div style="text-align:center"><span style="color:var(--primary);font-size:12px;cursor:pointer" onclick="go('login')">← লগইনে ফিরুন</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="page-dashboard" class="page">
+  <div style="display:flex;min-height:calc(100vh - 62px)">
+    <div id="dash-sidebar" style="width:230px;background:#111;border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:sticky;top:62px;height:calc(100vh - 62px);overflow-y:auto">
+      <div class="sidebar-profile" style="padding:20px 16px;border-bottom:1px solid var(--border)">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+          <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#ff8c00);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;border:2px solid var(--primary)">👤</div>
+          <div style="overflow:hidden"><div style="font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="dash-sidebar-name">User</div><div style="font-size:11px;color:var(--sub)" id="dash-sidebar-user">@username</div></div>
+        </div>
+        <div id="dash-sidebar-status"></div>
+      </div>
+      <nav style="padding:10px 0;flex:1">
+        <div class="dash-nav-item active" id="dnav-overview" onclick="dashTab('overview')"><span>📊</span><span>Overview</span></div>
+        <div class="dash-nav-item" id="dnav-listings" onclick="dashTab('listings')"><span>📋</span><span>আমার Listings</span></div>
+        <div class="dash-nav-item" id="dnav-orders" onclick="dashTab('orders')"><span>📦</span><span>Orders</span></div>
+        <div class="dash-nav-item" id="dnav-chats" onclick="dashTab('chats')"><span>💬</span><span>Conversations</span></div>
+        <div class="dash-nav-item" id="dnav-reviews" onclick="dashTab('reviews')"><span>⭐</span><span>Reviews</span></div>
+        <div class="dash-nav-item" id="dnav-favorites" onclick="dashTab('favorites')"><span>❤️</span><span>Favorites</span></div>
+        <div style="height:1px;background:var(--border);margin:8px 14px"></div>
+        <div class="dash-nav-item" onclick="go('create')"><span>➕</span><span>নতুন Listing</span></div>
+        <div class="dash-nav-item" onclick="go('edit-profile')"><span>✏️</span><span>Profile Edit</span></div>
+        <div style="height:1px;background:var(--border);margin:8px 14px"></div>
+        <div class="dash-nav-item" id="dnav-adminlink" style="display:none" onclick="go('admin')"><span>⚙️</span><span>Admin Panel</span></div>
+        <div class="dash-nav-item" style="color:var(--red)" onclick="doLogout()"><span>🚪</span><span>লগআউট</span></div>
+      </nav>
+    </div>
+    <div style="flex:1;padding:26px;overflow-y:auto;min-width:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+        <div><h1 style="font-size:20px;font-weight:800" id="dash-page-title">Overview</h1><p style="color:var(--sub);font-size:12px;margin-top:2px" id="dash-page-subtitle">আপনার account এর সামগ্রিক অবস্থা</p></div>
+        <button class="btn" style="padding:9px 18px;font-size:13px" onclick="go('create')">➕ নতুন Listing</button>
+      </div>
+      <div id="dash-tab-content"><div class="loading"><div class="spin"></div>লোড হচ্ছে...</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT PROFILE -->
+<div id="page-edit-profile" class="page">
+  <div class="section-sm">
+    <button onclick="go('dashboard')" style="background:transparent;color:var(--sub);border:none;cursor:pointer;font-size:13px;margin-bottom:16px;padding:0;font-family:'Hind Siliguri',sans-serif">← ড্যাশবোর্ডে ফিরুন</button>
+    <h1 style="font-size:20px;font-weight:800;margin-bottom:20px">✏️ Profile Edit</h1>
+    <div class="card" style="padding:24px">
+      <div class="form-group"><label>পুরো নাম</label><input type="text" id="ep-name"/></div>
+      <div class="form-group"><label>WhatsApp নম্বর</label><input type="tel" id="ep-wa"/></div>
+      <div class="form-group"><label>Facebook Profile Link</label><input type="url" id="ep-fb"/></div>
+      <div class="form-group"><label>নতুন পাসওয়ার্ড (ঐচ্ছিক)</label><input type="password" id="ep-pass" placeholder="নতুন পাসওয়ার্ড"/></div>
+      <button class="btn" style="width:100%;padding:12px;justify-content:center" onclick="saveProfile()">✅ Save করুন</button>
+    </div>
+  </div>
+</div>
+
+<!-- PUBLIC PROFILE -->
+<div id="page-profile" class="page">
+  <div style="max-width:820px;margin:0 auto;padding:24px 20px">
+    <button onclick="go('marketplace')" style="background:transparent;color:var(--sub);border:none;cursor:pointer;font-size:13px;margin-bottom:16px;padding:0;font-family:'Hind Siliguri',sans-serif">← ফিরুন</button>
+    <div id="public-profile-content"><div class="loading"><div class="spin"></div>লোড হচ্ছে...</div></div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div id="page-how" class="page">
+  <div class="section-sm">
+    <h1 style="font-size:24px;font-weight:800;text-align:center;margin-bottom:8px">কীভাবে কাজ করে?</h1>
+    <p style="text-align:center;color:var(--sub);margin-bottom:36px;font-size:13px">FireDeal Admin Escrow System</p>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="card" style="padding:22px;display:flex;gap:14px"><div style="width:42px;height:42px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;flex-shrink:0">১</div><div><h3 style="margin-bottom:6px">Listing তৈরি করুন</h3><p style="color:var(--sub);font-size:13px;line-height:1.7">Verified seller তার FF ID এর তথ্য দিয়ে listing পোস্ট করেন।</p></div></div>
+      <div class="card" style="padding:22px;display:flex;gap:14px"><div style="width:42px;height:42px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;flex-shrink:0">২</div><div><h3 style="margin-bottom:6px">Chat ও Negotiation</h3><p style="color:var(--sub);font-size:13px;line-height:1.7">Buyer listing দেখে seller এর সাথে chat ও দাম negotiate করেন।</p></div></div>
+      <div class="card" style="padding:22px;display:flex;gap:14px"><div style="width:42px;height:42px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;flex-shrink:0">৩</div><div><h3 style="margin-bottom:6px">Deal Confirm</h3><p style="color:var(--sub);font-size:13px;line-height:1.7">উভয়ে রাজি হলে Deal Confirm করেন। Admin কে notification যায়।</p></div></div>
+      <div class="card" style="padding:22px;display:flex;gap:14px;border-left:3px solid var(--primary)"><div style="width:42px;height:42px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;flex-shrink:0">৪</div><div><h3 style="margin-bottom:6px">Admin Payment গ্রহণ</h3><p style="color:var(--sub);font-size:13px;line-height:1.7">Admin 3-way chat এ যোগ দেন। Buyer Admin কে bKash/Nagad এ payment পাঠান।</p><div class="scam-warn" style="margin-top:8px">⚠️ কখনো সরাসরি Seller কে টাকা পাঠাবেন না!</div></div></div>
+      <div class="card" style="padding:22px;display:flex;gap:14px"><div style="width:42px;height:42px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;flex-shrink:0">৫</div><div><h3 style="margin-bottom:6px">ID Transfer ও Completion</h3><p style="color:var(--sub);font-size:13px;line-height:1.7">Admin ID verify করে Buyer কে দেন। Buyer confirm করলে Seller payment পান।</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div id="page-faq" class="page">
+  <div class="section-sm">
+    <h1 style="font-size:24px;font-weight:800;text-align:center;margin-bottom:8px">❓ FAQ</h1>
+    <p style="text-align:center;color:var(--sub);margin-bottom:36px;font-size:13px">সচরাচর জিজ্ঞাসিত প্রশ্নসমূহ</p>
+    <div style="display:flex;flex-direction:column;gap:10px" id="faq-list"></div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="page-contact" class="page">
+  <div class="section-sm">
+    <h1 style="font-size:24px;font-weight:800;text-align:center;margin-bottom:8px">📞 Contact Us</h1>
+    <p style="text-align:center;color:var(--sub);margin-bottom:36px;font-size:13px">আমরা সাহায্য করতে সর্বদা প্রস্তুত</p>
+    <div class="grid-3" style="margin-bottom:28px">
+      <div class="card" style="padding:22px;text-align:center"><div style="font-size:28px;margin-bottom:8px">📘</div><div style="font-weight:700;margin-bottom:4px">Facebook Page</div><div style="color:var(--sub);font-size:12px">সবচেয়ে দ্রুত reply</div></div>
+      <div class="card" style="padding:22px;text-align:center"><div style="font-size:28px;margin-bottom:8px">💬</div><div style="font-weight:700;margin-bottom:4px">WhatsApp</div><div style="color:var(--sub);font-size:12px">সকাল ৯টা – রাত ১১টা</div></div>
+      <div class="card" style="padding:22px;text-align:center"><div style="font-size:28px;margin-bottom:8px">📧</div><div style="font-weight:700;margin-bottom:4px">Email</div><div style="color:var(--sub);font-size:12px">firedeal.bd@gmail.com</div></div>
+    </div>
+    <div class="card" style="padding:24px">
+      <h3 style="margin-bottom:16px;font-size:16px">📨 সরাসরি message পাঠান</h3>
+      <div class="form-group"><label>আপনার নাম</label><input type="text" id="ct-name" placeholder="নাম লিখুন"/></div>
+      <div class="form-group"><label>ইমেইল বা WhatsApp</label><input type="text" id="ct-contact" placeholder="যোগাযোগের তথ্য"/></div>
+      <div class="form-group"><label>বিষয়</label><select id="ct-subject"><option>General Inquiry</option><option>Scam Report</option><option>Account Issue</option><option>Payment Problem</option><option>Other</option></select></div>
+      <div class="form-group"><label>বার্তা</label><textarea id="ct-msg" placeholder="আপনার সমস্যা বিস্তারিত লিখুন..."></textarea></div>
+      <button class="btn" style="width:100%;padding:12px;justify-content:center" onclick="submitContact()">পাঠান</button>
+    </div>
+  </div>
+</div>
+
+<!-- TERMS -->
+<div id="page-terms" class="page">
+  <div class="section-sm">
+    <h1 style="font-size:22px;font-weight:800;margin-bottom:20px">📜 Terms of Service</h1>
+    <div class="card" style="padding:24px;line-height:1.8;color:var(--sub);font-size:13px">
+      <h3 style="color:#fff;margin-bottom:10px">১. সেবার শর্তাবলী</h3><p style="margin-bottom:16px">FireDeal ব্যবহার করে আপনি এই Terms মেনে চলতে সম্মত হচ্ছেন।</p>
+      <h3 style="color:#fff;margin-bottom:10px">২. নিরাপদ লেনদেন</h3><p style="margin-bottom:16px">সমস্ত payment অবশ্যই Admin এর মাধ্যমে করতে হবে। সরাসরি payment করলে FireDeal দায়ী নয়।</p>
+      <h3 style="color:#fff;margin-bottom:10px">৩. Account নিষেধাজ্ঞা</h3><p style="margin-bottom:16px">ভুয়া তথ্য, scam বা অসৎ কার্যকলাপের জন্য account permanently ban করা হবে।</p>
+      <h3 style="color:#fff;margin-bottom:10px">৪. Admin এর কর্তৃত্ব</h3><p>Admin এর যেকোনো সিদ্ধান্ত চূড়ান্ত।</p>
+    </div>
+  </div>
+</div>
+
+<!-- PRIVACY -->
+<div id="page-privacy" class="page">
+  <div class="section-sm">
+    <h1 style="font-size:22px;font-weight:800;margin-bottom:20px">🔒 Privacy Policy</h1>
+    <div class="card" style="padding:24px;line-height:1.8;color:var(--sub);font-size:13px">
+      <h3 style="color:#fff;margin-bottom:10px">তথ্য সংগ্রহ</h3><p style="margin-bottom:16px">আমরা নাম, email, WhatsApp, Facebook link ও face video সংগ্রহ করি। শুধুমাত্র identity verification এর জন্য।</p>
+      <h3 style="color:#fff;margin-bottom:10px">তথ্য সুরক্ষা</h3><p style="margin-bottom:16px">আপনার সমস্ত তথ্য encrypted। তৃতীয় কোনো পক্ষের সাথে শেয়ার হয় না।</p>
+      <h3 style="color:#fff;margin-bottom:10px">Cookies</h3><p>আমরা session management এর জন্য browser storage ব্যবহার করি।</p>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="page-admin" class="page">
+  <div class="admin-wrap">
+    <div class="admin-sidebar">
+      <div style="padding:14px 16px 10px;font-size:10px;color:var(--sub);font-weight:700;letter-spacing:2px">ADMIN</div>
+      <div class="s-item active" onclick="adminTab('dash',this)"><span>📊</span><span>Dashboard</span></div>
+      <div class="s-item" onclick="adminTab('users',this)"><span>👥</span><span>Users</span></div>
+      <div class="s-item" onclick="adminTab('listings',this)"><span>📋</span><span>Listings</span></div>
+      <div class="s-item" onclick="adminTab('orders',this)"><span>📦</span><span>Orders</span></div>
+      <div class="s-item" onclick="adminTab('reports',this)"><span>🚨</span><span>Reports</span></div>
+      <div class="s-item" onclick="adminTab('announce',this)"><span>📢</span><span>Announce</span></div>
+    </div>
+    <div class="admin-content" id="admin-content"><div class="loading"><div class="spin"></div>লোড হচ্ছে...</div></div>
+  </div>
+</div>
+
+<!-- MODALS -->
+<div id="offer-modal" class="modal-overlay">
+  <div class="modal-box">
+    <h3 style="font-size:16px;margin-bottom:5px">💰 অফার করুন</h3>
+    <p style="color:var(--sub);font-size:12px;margin-bottom:16px" id="modal-price-txt"></p>
+    <div class="form-group"><label>আপনার অফার মূল্য (BDT)</label><input type="number" id="offer-val" placeholder="যেমনঃ 8500"/></div>
+    <div class="form-group"><label>মেসেজ (ঐচ্ছিক)</label><textarea id="offer-note" style="height:70px" placeholder="Seller কে কিছু জানাতে চাইলে..."></textarea></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" style="flex:1;justify-content:center" onclick="submitOffer()">অফার পাঠান</button>
+      <button class="btn-out" style="flex:1;justify-content:center" onclick="closeModal('offer-modal')">বাতিল</button>
+    </div>
+  </div>
+</div>
+
+<div id="review-modal" class="modal-overlay">
+  <div class="modal-box">
+    <h3 style="font-size:16px;margin-bottom:5px">⭐ Rating দিন</h3>
+    <p style="color:var(--sub);font-size:12px;margin-bottom:16px" id="review-modal-subtitle">Deal সম্পর্কে অভিজ্ঞতা জানান।</p>
+    <input type="hidden" id="review-order-id"/>
+    <input type="hidden" id="review-target-id"/>
+    <div class="form-group">
+      <label>Rating (১-৫ তারা)</label>
+      <div id="star-selector" style="display:flex;gap:10px;margin-top:8px">
+        <span onclick="selectStar(1)" id="star-1" style="font-size:30px;cursor:pointer">☆</span>
+        <span onclick="selectStar(2)" id="star-2" style="font-size:30px;cursor:pointer">☆</span>
+        <span onclick="selectStar(3)" id="star-3" style="font-size:30px;cursor:pointer">☆</span>
+        <span onclick="selectStar(4)" id="star-4" style="font-size:30px;cursor:pointer">☆</span>
+        <span onclick="selectStar(5)" id="star-5" style="font-size:30px;cursor:pointer">☆</span>
+      </div>
+      <input type="hidden" id="review-rating" value="0"/>
+    </div>
+    <div class="form-group"><label>Comment (ঐচ্ছিক)</label><textarea id="review-comment" style="height:70px" placeholder="অভিজ্ঞতা লিখুন..."></textarea></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" style="flex:1;justify-content:center" onclick="submitReview()">⭐ Submit করুন</button>
+      <button class="btn-out" style="flex:1;justify-content:center" onclick="closeModal('review-modal')">বাতিল</button>
+    </div>
+  </div>
+</div>
+
+<div id="share-modal" class="modal-overlay">
+  <div class="modal-box" style="max-width:360px">
+    <h3 style="font-size:16px;margin-bottom:16px">📤 Share করুন</h3>
+    <div id="share-link-box" style="background:#1A1A1A;border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--sub);margin-bottom:14px;word-break:break-all"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="share-btn" style="background:#25D366;color:#fff;flex:1" onclick="shareWhatsApp()">💬 WhatsApp</button>
+      <button class="share-btn" style="background:#1877F2;color:#fff;flex:1" onclick="shareFacebook()">📘 Facebook</button>
+      <button class="btn-gray" style="flex:1;border-radius:8px;padding:8px" onclick="copyShareLink()">📋 Copy Link</button>
+    </div>
+    <button class="btn-out" style="width:100%;margin-top:10px;padding:9px;justify-content:center" onclick="closeModal('share-modal')">বন্ধ করুন</button>
+  </div>
+</div>
+
+<div id="report-modal" class="modal-overlay">
+  <div class="modal-box" style="max-width:380px">
+    <h3 style="font-size:16px;margin-bottom:5px">🚨 Report করুন</h3>
+    <p style="color:var(--sub);font-size:12px;margin-bottom:16px">এই listing সম্পর্কে সমস্যা জানান</p>
+    <input type="hidden" id="report-listing-id"/>
+    <div class="form-group"><label>কারণ</label><select id="report-reason"><option>Fake listing / Scam</option><option>Wrong information</option><option>Already sold</option><option>Inappropriate content</option><option>Other</option></select></div>
+    <div class="form-group"><label>বিস্তারিত</label><textarea id="report-detail" style="height:70px" placeholder="সমস্যা বিস্তারিত লিখুন..."></textarea></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn-red" style="flex:1;padding:10px;border-radius:8px;font-size:13px" onclick="submitReport()">🚨 Report পাঠান</button>
+      <button class="btn-out" style="flex:1;padding:10px;justify-content:center" onclick="closeModal('report-modal')">বাতিল</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const SUPA_URL='https://asgaqjsnngbwteebhwby.supabase.co';
+const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFzZ2FxanNubmdid3RlZWJod2J5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNDQwNDQsImV4cCI6MjA5MjYyMDA0NH0.k_K7dRuPHHN9GBGwKnoNdzJjSF6PiVL6ocFoLCvnyHk';
+let sb=null,curUser=null,curProfile=null,curListing=null,curConvId=null,chatSub=null,notifSub=null;
+let allListings=[],regStepNum=1,adminTabName='dash',dashTabName='overview',shareUrl='';
+const RC={Grandmaster:'#FF0044',Heroic:'#FF6B00',Diamond:'#00BFFF',Platinum:'#00E5A0',Gold:'#FFD700',Silver:'#B0B0B0',Bronze:'#CD7F32'};
+const RI={Grandmaster:'★',Heroic:'◆',Diamond:'◇',Platinum:'▲',Gold:'●',Silver:'○',Bronze:'◉'};
+
+// ── INIT ────────────────────────────────────────────────────────────
+let _authReady=false;
+function initApp(){
+  sb=supabase.createClient(SUPA_URL,SUPA_KEY,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'firedeal-auth'}});
+  document.getElementById('main-nav').style.display='flex';
+  sb.auth.onAuthStateChange(async(event,session)=>{
+    if(event==='INITIAL_SESSION'){
+      // শুধু page load এর সময় — session থাকলে dashboard, না থাকলে home
+      if(session){
+        curUser=session.user;
+        await loadProfile();
+        updateNavAuth();
+        go('dashboard');
+      } else {
+        updateNavAuth();
+        go('home');
+      }
+      _authReady=true;
+    } else if(event==='SIGNED_IN'){
+      // doLogin() নিজেই navigate করে — এখানে শুধু state update করি
+      curUser=session.user;
+      if(!curProfile){await loadProfile();updateNavAuth();}
+    } else if(event==='SIGNED_OUT'){
+      curUser=null;curProfile=null;updateNavAuth();go('home');
+    } else if(event==='TOKEN_REFRESHED'){
+      curUser=session.user;
+    }
+  });
+}
+
+async function loadProfile(){
+  if(!curUser)return;
+  const{data,error}=await sb.from('profiles').select('*').eq('id',curUser.id).single();
+  if(data){
+    curProfile=data;
+    loadNotifications();
+    document.getElementById('mobile-nav-bar').style.display='block';
+  } else {
+    const meta=curUser.user_metadata||{};
+    const uname=(curUser.email.split('@')[0]||'user').toLowerCase().replace(/[^a-z0-9_]/g,'').substring(0,20);
+    const newProf={id:curUser.id,email:curUser.email,full_name:meta.full_name||'',username:uname,role:'user',verification_status:'pending',rating:0,total_deals:0};
+    const{data:created}=await sb.from('profiles').upsert(newProf).select().single();
+    curProfile=created||null;
+    if(curProfile){loadNotifications();document.getElementById('mobile-nav-bar').style.display='block';}
+  }
+}
+
+function updateNavAuth(){
+  const a=document.getElementById('nav-auth-area');
+  if(curUser&&curProfile){
+    a.innerHTML=`
+      <div class="notif-bell" onclick="toggleNotif()" id="notif-bell-btn">🔔<div class="notif-dot" id="notif-dot"></div></div>
+      <span style="color:var(--sub);font-size:12px;cursor:pointer;padding:5px 10px;border-radius:6px;border:1px solid var(--border)" onclick="go('dashboard')">@${curProfile.username||'user'}</span>
+      ${curProfile.role==='admin'?`<button class="btn-sm" style="background:#1E1E1E;color:#bbb;border:1px solid var(--border)" onclick="go('admin')">⚙ Admin</button>`:''}`;
+  } else {
+    a.innerHTML=`
+      <button class="btn-out" style="padding:7px 14px;font-size:12px" onclick="go('register')">রেজিস্ট্রেশন</button>
+      <button class="btn" style="padding:7px 14px;font-size:12px;justify-content:center" onclick="go('login')">লগইন</button>`;
+  }
+}
+
+// ── ROUTING ─────────────────────────────────────────────────────────────
+function go(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const el=document.getElementById('page-'+page);if(el)el.classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  const na=document.getElementById('nav-'+page);if(na)na.classList.add('active');
+  window.scrollTo(0,0);closeAllModals();
+  if(page==='home')renderHome();
+  if(page==='marketplace')renderMarketplace();
+  if(page==='listing')renderListing();
+  if(page==='chat')loadChatMsgs();
+  if(page==='dashboard')renderDashboard();
+  if(page==='admin')renderAdmin();
+  if(page==='register'){regStepNum=1;updateRegStepUI();}
+  if(page==='faq')renderFAQ();
+  if(page==='edit-profile')loadEditProfile();
+}
+
+// ── AUTH ─────────────────────────────────────────────────────────────────
+async function doLogin(){
+  const e=document.getElementById('l-email').value.trim();
+  const p=document.getElementById('l-pass').value;
+  if(!e||!p){showToast('❌ ইমেইল ও পাসওয়ার্ড দাও');return;}
+  const btn=document.getElementById('login-btn');btn.disabled=true;btn.textContent='লগইন হচ্ছে...';
+  const{data,error}=await sb.auth.signInWithPassword({email:e,password:p});
+  btn.disabled=false;btn.textContent='লগইন করুন';
+  if(error){showToast('❌ '+(error.message.includes('Invalid')?'ইমেইল বা পাসওয়ার্ড ভুল':error.message.includes('Email not confirmed')?'Email verify করো':error.message));return;}
+  curUser=data.user;
+  await loadProfile();
+  updateNavAuth();
+  showToast('✅ সফলভাবে লগইন হয়েছে!');
+  // Profile পাওয়া গেলে dashboard, না পেলে register পেজে নিয়ে যাই
+  if(curProfile){go('dashboard');}else{showToast('❌ Profile পাওয়া যায়নি। Admin এ যোগাযোগ করো।');go('home');}
+}
+
+async function doRegister(){
+  const nm=document.getElementById('r-name').value.trim();
+  const un=document.getElementById('r-user').value.trim().toLowerCase().replace(/[^a-z0-9_]/g,'');
+  const em=document.getElementById('r-email').value.trim();
+  const pw=document.getElementById('r-pass').value;
+  const wa=document.getElementById('r-wa').value.trim();
+  const fb=document.getElementById('r-fb').value.trim();
+  if(!nm||!un||!em||!pw||!wa||!fb){showToast('❌ সব তথ্য পূরণ করো');return;}
+  if(pw.length<8){showToast('❌ পাসওয়ার্ড কমপক্ষে ৮ অক্ষর');return;}
+  if(un.length<3){showToast('❌ Username কমপক্ষে ৩ অক্ষর');return;}
+  const btn=document.getElementById('reg-submit-btn');btn.disabled=true;btn.textContent='হচ্ছে...';
+  const{data,error}=await sb.auth.signUp({email:em,password:pw});
+  if(error){btn.disabled=false;btn.textContent='✅ রেজিস্ট্রেশন করুন';showToast('❌ '+error.message);return;}
+  await sb.from('profiles').insert({id:data.user.id,username:un,full_name:nm,whatsapp:wa,facebook_link:fb,verification_status:'pending',role:'user',rating:0,total_deals:0});
+  btn.disabled=false;btn.textContent='✅ রেজিস্ট্রেশন করুন';
+  showToast('✅ রেজিস্ট্রেশন সম্পন্ন! Email verify করো তারপর login করো।');go('login');
+}
+
+async function doLogout(){
+  if(notifSub)notifSub.unsubscribe();if(chatSub)chatSub.unsubscribe();
+  await sb.auth.signOut();curUser=null;curProfile=null;updateNavAuth();
+  document.getElementById('mobile-nav-bar').style.display='none';
+  showToast('👋 লগআউট হয়েছে');go('home');
+}
+
+async function doForgot(){
+  const e=document.getElementById('forgot-email').value.trim();if(!e){showToast('❌ Email দাও');return;}
+  await sb.auth.resetPasswordForEmail(e,{redirectTo:window.location.href});
+  showToast('✅ Reset link পাঠানো হয়েছে!');
+}
+
+// ── LISTINGS ─────────────────────────────────────────────────────────────
+async function loadListings(){
+  const{data}=await sb.from('listings').select('*,profiles(id,username,verification_status,rating,total_deals)').eq('status','active').order('created_at',{ascending:false});
+  return data||[];
+}
+
+function rankBadge(rank){
+  const rc=RC[rank]||'#888';
+  return `<span class="badge" style="background:${rc}22;color:${rc};border:1px solid ${rc}">${RI[rank]||''} ${rank}</span>`;
+}
+
+function sellerLevelBadge(deals){
+  if(deals>=50)return`<span class="seller-level" style="background:#FFD70022;color:var(--gold);border:1px solid var(--gold)">👑 Elite</span>`;
+  if(deals>=20)return`<span class="seller-level" style="background:#FF6B0022;color:var(--primary);border:1px solid var(--primary)">🔥 Pro</span>`;
+  if(deals>=5)return`<span class="seller-level" style="background:#00C85322;color:var(--green);border:1px solid var(--green)">✅ Trusted</span>`;
+  return`<span class="seller-level" style="background:#2A2A2A;color:var(--sub);border:1px solid var(--border)">🆕 New</span>`;
+}
+
+function listingCard(l){
+  const prof=l.profiles||{};const fav=isFav(l.id);
+  return`<div class="listing-card" onclick="openListing(${l.id})">
+    <div class="thumb">🎮
+      <span style="position:absolute;top:8px;left:8px">${rankBadge(l.rank)}</span>
+      ${prof.verification_status==='approved'?`<span class="badge badge-blue" style="position:absolute;top:8px;right:8px;font-size:10px">✓</span>`:''}
+      <span style="position:absolute;bottom:8px;right:8px;background:#0008;border-radius:6px;padding:2px 7px;font-size:11px;color:var(--sub)">Lv.${l.level||'?'}</span>
+    </div>
+    <div style="padding:13px">
+      <div style="font-weight:700;font-size:13px;margin-bottom:7px;line-height:1.4;height:36px;overflow:hidden">${l.title}</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px">
+        <span class="tag">◇${(l.diamonds||0).toLocaleString()}</span>
+        <span class="tag">${l.bind_type||'?'}</span>
+        ${l.characters?`<span class="tag" style="max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${l.characters.split(',')[0].trim()}</span>`:''}
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="color:var(--primary);font-size:19px;font-weight:900;font-family:'Rajdhani',sans-serif">৳${(l.price||0).toLocaleString()}</div>
+          <div style="color:var(--sub);font-size:11px">@${prof.username||'?'} ${prof.rating>0?'⭐'+prof.rating:''}</div>
+        </div>
+        <button id="fav-btn-${l.id}" style="background:transparent;border:1px solid #333;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:15px;color:${fav?'var(--red)':'#aaa'}" onclick="event.stopPropagation();toggleFav(${l.id})">${fav?'❤️':'🤍'}</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+async function renderHome(){
+  const list=await loadListings();allListings=list;
+  const el=document.getElementById('home-listings');if(!el)return;
+  el.innerHTML=list.length?list.slice(0,6).map(listingCard).join(''):`<div style="text-align:center;padding:40px;color:var(--sub)"><div style="font-size:48px;margin-bottom:12px">🎮</div>এখনো কোনো listing নেই। প্রথমটা তুমি পোস্ট করো!</div>`;
+  try{
+    const[{count:uc},{count:lc},{count:oc}]=await Promise.all([
+      sb.from('profiles').select('*',{count:'exact',head:true}),
+      sb.from('listings').select('*',{count:'exact',head:true}).eq('status','active'),
+      sb.from('orders').select('*',{count:'exact',head:true}).eq('status','completed')
+    ]);
+    const su=document.getElementById('stat-users');const sl=document.getElementById('stat-listings');const sd=document.getElementById('stat-deals');
+    if(su&&uc)su.textContent=(uc||0).toLocaleString()+'+';
+    if(sl&&lc)sl.textContent=(lc||0).toLocaleString()+'+';
+    if(sd&&oc)sd.textContent=(oc||0).toLocaleString();
+  }catch(e){}
+}
+
+async function renderMarketplace(){
+  const list=await loadListings();allListings=list;
+  document.getElementById('mp-count').textContent=`মোট ${list.length}টি Active Listing`;filterMP();
+}
+
+function filterMP(){
+  const q=(document.getElementById('mp-search')||{}).value?.toLowerCase()||'';
+  const r=(document.getElementById('mp-rank')||{}).value||'';
+  const s=(document.getElementById('mp-sort')||{}).value||'new';
+  const pm=parseInt((document.getElementById('mp-price-max')||{}).value)||0;
+  let list=[...allListings].filter(l=>{
+    const mq=l.title.toLowerCase().includes(q)||(l.profiles?.username||'').toLowerCase().includes(q)||(l.characters||'').toLowerCase().includes(q);
+    return mq&&(!r||l.rank===r)&&(!pm||l.price<=pm);
+  });
+  if(s==='low')list.sort((a,b)=>a.price-b.price);
+  else if(s==='high')list.sort((a,b)=>b.price-a.price);
+  const el=document.getElementById('mp-listings');if(!el)return;
+  el.innerHTML=list.map(listingCard).join('');
+  const emp=document.getElementById('mp-empty');if(emp)emp.style.display=list.length?'none':'block';
+}
+
+async function openListing(id){
+  const{data:l}=await sb.from('listings').select('*,profiles(id,username,verification_status,rating,total_deals,whatsapp,facebook_link)').eq('id',id).single();
+  if(!l)return;curListing=l;
+  await sb.from('listings').update({views:(l.views||0)+1}).eq('id',id);
+  go('listing');
+}
+
+function renderListing(){
+  if(!curListing)return;
+  const l=curListing;const prof=l.profiles||{};
+  const isOwn=curProfile&&curProfile.id===prof.id;
+  const fav=isFav(l.id);
+  shareUrl=window.location.href.split('?')[0]+'?listing='+l.id;
+  document.getElementById('listing-detail-content').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 300px;gap:18px" class="listing-detail-grid">
+      <div>
+        <div class="card" style="height:260px;display:flex;align-items:center;justify-content:center;font-size:90px;margin-bottom:13px;background:linear-gradient(135deg,#1A1A1A,#222);position:relative">
+          🎮
+          <span style="position:absolute;top:14px;left:14px">${rankBadge(l.rank)}</span>
+          ${prof.verification_status==='approved'?`<span class="badge badge-blue" style="position:absolute;top:14px;right:14px">✓ Verified Seller</span>`:''}
+        </div>
+        <div class="card" style="padding:22px">
+          <h1 style="font-size:17px;font-weight:800;margin-bottom:16px">${l.title}</h1>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:18px">
+            ${[['লেভেল',l.level||'?'],['র‍্যাংক',l.rank],['ডায়মন্ড','◇'+(l.diamonds||0).toLocaleString()],['Bind',l.bind_type],['Region',l.region||'BD'],['👁 Views',(l.views||0)+1]].map(([k,v])=>`<div style="background:#1A1A1A;border-radius:8px;padding:10px 12px"><div style="color:var(--sub);font-size:10px;font-weight:700;letter-spacing:1px;margin-bottom:3px">${k}</div><div style="font-weight:700;font-size:14px">${v}</div></div>`).join('')}
+          </div>
+          ${l.characters?`<div style="margin-bottom:14px"><div style="font-size:11px;color:var(--sub);font-weight:700;letter-spacing:1.5px;margin-bottom:8px">CHARACTERS</div><div style="display:flex;gap:6px;flex-wrap:wrap">${l.characters.split(',').map(c=>`<span class="badge badge-purple">${c.trim()}</span>`).join('')}</div></div>`:''}
+          <div style="font-size:11px;color:var(--sub);font-weight:700;letter-spacing:1.5px;margin-bottom:8px">DESCRIPTION</div>
+          <p style="color:var(--sub);font-size:13px;line-height:1.8">${l.description||'কোনো বিবরণ নেই।'}</p>
+          <div style="margin-top:16px">
+            <button class="share-btn" style="background:#25D366;color:#fff" onclick="openShareModal()">📤 Share করুন</button>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="card" style="padding:22px">
+          <div style="font-size:32px;font-weight:900;color:var(--primary);font-family:'Rajdhani',sans-serif;margin-bottom:3px">৳${(l.price||0).toLocaleString()}</div>
+          <div style="color:var(--sub);font-size:12px;margin-bottom:18px">মূল্য আলোচনাযোগ্য • BDT</div>
+          ${isOwn?`
+            <div class="badge badge-orange" style="width:100%;text-align:center;padding:10px;font-size:12px;display:block">এটি আপনার নিজের listing</div>
+            <button class="btn-out" style="width:100%;padding:10px;margin-top:9px;justify-content:center" onclick="openEditListing(${l.id})">✏️ Edit করুন</button>
+          `:`
+            <button class="btn" style="width:100%;padding:12px;margin-bottom:9px;justify-content:center" onclick="openModal('offer-modal');document.getElementById('modal-price-txt').textContent='চাওয়া মূল্য: ৳${(l.price||0).toLocaleString()}'">💰 অফার / Buy Now</button>
+            <button class="btn-out" style="width:100%;padding:12px;margin-bottom:9px;justify-content:center" onclick="startChat()">💬 Chat করুন</button>
+            <button id="fav-detail-btn" style="width:100%;padding:10px;border-radius:8px;background:${fav?'#FF444422':'transparent'};border:1px solid ${fav?'var(--red)':'#444'};color:${fav?'var(--red)':'#aaa'};cursor:pointer;font-family:'Hind Siliguri',sans-serif;font-size:13px" onclick="toggleFavDetail(${l.id})">${fav?'❤️ Saved':'🤍 Wishlist এ রাখুন'}</button>
+          `}
+        </div>
+        <div class="card" style="padding:18px">
+          <div style="font-size:11px;color:var(--sub);font-weight:700;letter-spacing:1.5px;margin-bottom:14px">SELLER INFO</div>
+          <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;cursor:pointer" onclick="viewProfile('${prof.id}')">
+            <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#ff8c00);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">👤</div>
+            <div>
+              <div style="font-weight:700;font-size:14px">@${prof.username||'?'}</div>
+              <div style="display:flex;gap:5px;margin-top:3px">
+                ${prof.verification_status==='approved'?`<span style="color:var(--blue);font-size:10px;font-weight:700">✓ Verified</span>`:''}
+                ${sellerLevelBadge(prof.total_deals||0)}
+              </div>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:center">
+            <div style="background:#1A1A1A;border-radius:8px;padding:8px"><div style="font-weight:900;font-size:18px;color:var(--primary);font-family:'Rajdhani',sans-serif">${prof.total_deals||0}</div><div style="color:var(--sub);font-size:10px">Deals</div></div>
+            <div style="background:#1A1A1A;border-radius:8px;padding:8px"><div style="font-weight:900;font-size:18px;color:var(--gold);font-family:'Rajdhani',sans-serif">${prof.rating>0?'⭐'+prof.rating:'নতুন'}</div><div style="color:var(--sub);font-size:10px">Rating</div></div>
+          </div>
+        </div>
+        <div class="card2" style="padding:13px;border-left:3px solid var(--green)">
+          <div style="font-weight:700;font-size:12px;color:var(--green);margin-bottom:5px">🛡️ নিরাপদ লেনদেন</div>
+          <p style="color:var(--sub);font-size:11px;line-height:1.6;margin:0">সব টাকা Admin এর মাধ্যমে। Seller কে সরাসরি টাকা দেবেন না।</p>
+        </div>
+        ${!isOwn?`<button style="width:100%;padding:10px;border-radius:8px;background:transparent;border:1px solid var(--red);color:var(--red);cursor:pointer;font-family:'Hind Siliguri',sans-serif;font-size:13px" onclick="openReportModal(${l.id})">🚨 Report করুন</button>`:''}
+      </div>
+    </div>`;
+}
+
+async function createListing(){
+  if(!curUser){showToast('❌ প্রথমে লগইন করো');go('login');return;}
+  if(curProfile?.verification_status!=='approved'){showToast('❌ Listing করতে Admin verification দরকার।');return;}
+  const t=document.getElementById('c-title').value.trim();
+  const r=document.getElementById('c-rank').value;
+  const lv=parseInt(document.getElementById('c-level').value)||1;
+  const d=parseInt(document.getElementById('c-diamonds').value)||0;
+  const b=document.getElementById('c-bind').value;
+  const p=parseFloat(document.getElementById('c-price').value)||0;
+  const chars=document.getElementById('c-chars').value.trim();
+  const desc=document.getElementById('c-desc').value.trim();
+  if(!t||!p||!desc){showToast('❌ Title, Price ও Description আবশ্যক');return;}
+  const btn=document.getElementById('create-btn');btn.disabled=true;btn.textContent='পোস্ট হচ্ছে...';
+  const{error}=await sb.from('listings').insert({seller_id:curUser.id,title:t,rank:r,level:lv,diamonds:d,bind_type:b,price:p,characters:chars,description:desc,region:'BD',status:'active',views:0});
+  btn.disabled=false;btn.textContent='✅ Listing Publish করুন';
+  if(error){showToast('❌ '+error.message);return;}
+  showToast('✅ Listing সফলভাবে Publish হয়েছে!');
+  ['c-title','c-level','c-diamonds','c-price','c-chars','c-desc'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  go('marketplace');
+}
+
+async function openEditListing(id){
+  const{data:l}=await sb.from('listings').select('*').eq('id',id).single();if(!l)return;
+  document.getElementById('el-id').value=l.id;
+  document.getElementById('el-title').value=l.title||'';
+  document.getElementById('el-rank').value=l.rank||'Heroic';
+  document.getElementById('el-level').value=l.level||'';
+  document.getElementById('el-diamonds').value=l.diamonds||'';
+  document.getElementById('el-bind').value=l.bind_type||'Google';
+  document.getElementById('el-price').value=l.price||'';
+  document.getElementById('el-desc').value=l.description||'';
+  go('edit-listing');
+}
+
+async function saveEditListing(){
+  const id=document.getElementById('el-id').value;
+  const t=document.getElementById('el-title').value.trim();
+  const p=parseFloat(document.getElementById('el-price').value)||0;
+  const desc=document.getElementById('el-desc').value.trim();
+  if(!t||!p||!desc){showToast('❌ Title, Price ও Description আবশ্যক');return;}
+  const btn=document.getElementById('edit-listing-btn');btn.disabled=true;btn.textContent='Update হচ্ছে...';
+  const{error}=await sb.from('listings').update({title:t,rank:document.getElementById('el-rank').value,level:parseInt(document.getElementById('el-level').value)||1,diamonds:parseInt(document.getElementById('el-diamonds').value)||0,bind_type:document.getElementById('el-bind').value,price:p,description:desc}).eq('id',id).eq('seller_id',curUser.id);
+  btn.disabled=false;btn.textContent='✅ Update করুন';
+  if(error){showToast('❌ '+error.message);return;}
+  showToast('✅ Listing update হয়েছে!');go('dashboard');
+}
+
+async function deleteListing(){
+  const id=document.getElementById('el-id').value;
+  if(!confirm('এই listing delete করবেন?'))return;
+  await sb.from('listings').update({status:'removed'}).eq('id',id).eq('seller_id',curUser.id);
+  showToast('🗑 Listing delete হয়েছে');go('dashboard');
+}
+
+// ── CHAT ─────────────────────────────────────────────────────────────────
+async function startChat(){
+  if(!curUser){showToast('❌ Chat করতে লগইন করো');go('login');return;}
+  if(!curListing)return;
+  const sellerId=curListing.profiles?.id;
+  if(curProfile?.id===sellerId){showToast('❌ নিজের listing এ chat করা যাবে না');return;}
+  let{data:conv}=await sb.from('conversations').select('id').eq('listing_id',curListing.id).eq('buyer_id',curUser.id).single();
+  if(!conv){
+    const{data:nc}=await sb.from('conversations').insert({listing_id:curListing.id,buyer_id:curUser.id,seller_id:sellerId}).select().single();
+    conv=nc;
+  }
+  curConvId=conv?.id;
+  document.getElementById('chat-with').textContent='@'+(curListing.profiles?.username||'Seller');
+  document.getElementById('chat-rank-badge').textContent=(RI[curListing.rank]||'')+' '+curListing.rank;
+  const fb=document.getElementById('chat-fav-btn');if(fb)fb.textContent=isFav(curListing.id)?'❤️':'🤍';
+  go('chat');
+}
+
+function chatToggleFav(){if(!curListing)return;toggleFav(curListing.id);const fb=document.getElementById('chat-fav-btn');if(fb)fb.textContent=isFav(curListing.id)?'❤️':'🤍';}
+
+async function loadChatMsgs(){
+  if(!curConvId)return;
+  const{data}=await sb.from('messages').select('*,profiles(username)').eq('conversation_id',curConvId).order('created_at',{ascending:true});
+  renderChatMsgs(data||[]);
+  if(chatSub)chatSub.unsubscribe();
+  chatSub=sb.channel('conv_'+curConvId).on('postgres_changes',{event:'INSERT',schema:'public',table:'messages',filter:'conversation_id=eq.'+curConvId},(payload)=>{appendChatMsg(payload.new);}).subscribe();
+}
+
+function renderChatMsgs(msgs){
+  const box=document.getElementById('chat-msgs');if(!box)return;
+  box.innerHTML=msgs.length?msgs.map(m=>chatBubble(m)).join(''):`<div style="text-align:center;color:var(--sub);padding:40px"><div style="font-size:36px;margin-bottom:10px">💬</div>প্রথম message পাঠাও!</div>`;
+  box.scrollTop=box.scrollHeight;
+}
+
+function chatBubble(m){
+  const isMe=m.sender_id===curUser?.id;
+  const t=new Date(m.created_at).toLocaleTimeString('bn-BD',{hour:'2-digit',minute:'2-digit'});
+  if(m.is_admin)return`<div class="chat-bubble admin-msg"><div class="msg">🛡️ <strong>Admin:</strong> ${m.content}<div style="font-size:10px;color:#fff6;margin-top:3px">${t}</div></div></div>`;
+  if(m.content&&(m.content.startsWith('💱')||m.content.startsWith('✅ Deal Confirm')))return`<div class="chat-bubble system-msg"><div class="msg">${m.content}</div></div>`;
+  return`<div class="chat-bubble ${isMe?'me':'them'}"><div class="msg">${m.content}<div style="font-size:10px;color:#fff5;margin-top:3px">${t}</div></div></div>`;
+}
+
+function appendChatMsg(m){
+  const box=document.getElementById('chat-msgs');if(!box)return;
+  const div=document.createElement('div');div.innerHTML=chatBubble(m);
+  if(div.firstChild)box.appendChild(div.firstChild);box.scrollTop=box.scrollHeight;
+}
+
+async function sendMsg(){
+  if(!curUser||!curConvId)return;
+  const inp=document.getElementById('chat-input');const txt=inp.value.trim();if(!txt)return;inp.value='';
+  const{error}=await sb.from('messages').insert({conversation_id:curConvId,sender_id:curUser.id,content:txt});
+  if(error){showToast('❌ Message পাঠানো যায়নি');inp.value=txt;}
+}
+
+async function sendCounterOffer(){
+  const val=document.getElementById('counter-offer-input').value;
+  if(!val||!curConvId){showToast('❌ মূল্য দাও');return;}
+  await sb.from('messages').insert({conversation_id:curConvId,sender_id:curUser.id,content:`💱 Counter Offer: ৳${parseInt(val).toLocaleString()} — আমার প্রস্তাবিত মূল্য`});
+  document.getElementById('counter-offer-input').value='';
+  document.getElementById('counter-offer-bar').style.display='none';
+  showToast('✅ Counter offer পাঠানো হয়েছে!');
+}
+
+async function confirmDeal(){
+  if(!curUser||!curListing){showToast('❌ লগইন করো');return;}
+  const{data:ex}=await sb.from('orders').select('id').eq('listing_id',curListing.id).eq('buyer_id',curUser.id).single();
+  if(ex){showToast('⚠️ এই listing এ আগেই deal confirm হয়েছে');return;}
+  const{error}=await sb.from('orders').insert({listing_id:curListing.id,buyer_id:curUser.id,seller_id:curListing.profiles?.id,amount:curListing.price,status:'pending',step:1});
+  if(error){showToast('❌ '+error.message);return;}
+  if(curConvId)await sb.from('messages').insert({conversation_id:curConvId,sender_id:curUser.id,content:'✅ Deal Confirm করা হয়েছে! Admin শীঘ্রই যোগ দেবেন।'});
+  await sendNotif(curListing.profiles?.id,`💰 @${curProfile.username} আপনার "${curListing.title}" listing এ Deal Confirm করেছেন!`);
+  showToast('✅ Deal Confirm! Admin যোগ দেবেন।');
+  const btn=document.getElementById('deal-confirm-btn');if(btn){btn.disabled=true;btn.textContent='⏳ Admin এর অপেক্ষা করুন';}
+}
+
+async function openConvFromDash(convId,listingId){
+  const{data:l}=await sb.from('listings').select('*,profiles(id,username,verification_status,rating,total_deals)').eq('id',listingId).single();
+  if(l)curListing=l;curConvId=convId;
+  const cw=document.getElementById('chat-with');if(cw)cw.textContent='@'+(l?.profiles?.username||'User');
+  const rb=document.getElementById('chat-rank-badge');if(rb)rb.textContent=(RI[l?.rank]||'')+' '+(l?.rank||'');
+  go('chat');
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────────────────────
+async function renderDashboard(){
+  if(!curUser){go('login');return;}
+  if(!curProfile)await loadProfile();
+  // Profile না পেলে login এ না পাঠিয়ে warning দেখাই — user তো logged in আছে!
+  if(!curProfile){
+    const c=document.getElementById('dash-tab-content');
+    if(c)c.innerHTML='<div style="padding:40px;text-align:center;color:var(--sub)"><div style="font-size:48px;margin-bottom:16px">⚠️</div><div style="font-weight:700;color:#fff;margin-bottom:8px">Profile পাওয়া যাচ্ছে না</div><div style="font-size:13px;margin-bottom:20px">আপনার profile database এ নেই। Admin এ যোগাযোগ করুন।</div><button class="btn-out" onclick="doLogout()">লগআউট</button></div>';
+    return;
+  }
+  const sn=document.getElementById('dash-sidebar-name');const su=document.getElementById('dash-sidebar-user');
+  const ss=document.getElementById('dash-sidebar-status');const al=document.getElementById('dnav-adminlink');
+  if(sn)sn.textContent=curProfile.full_name||('@'+curProfile.username);
+  if(su)su.textContent='@'+curProfile.username;
+  if(al)al.style.display=curProfile.role==='admin'?'flex':'none';
+  const st=curProfile.verification_status;
+  const stMap={approved:['✅ Verified','var(--green)'],rejected:['❌ Rejected','var(--red)'],pending:['⏳ Pending','var(--gold)']};
+  const[stTxt,stClr]=stMap[st]||stMap.pending;
+  if(ss)ss.innerHTML=`<span style="background:${stClr}18;border:1px solid ${stClr};border-radius:20px;padding:3px 10px;font-size:10px;color:${stClr};font-weight:700">${stTxt}</span>`;
+  await dashTab(dashTabName);
+}
+
+async function dashTab(tab){
+  document.querySelectorAll('.dash-nav-item').forEach(b=>b.classList.remove('active'));
+  const an=document.getElementById('dnav-'+tab);if(an)an.classList.add('active');
+  dashTabName=tab;
+  const c=document.getElementById('dash-tab-content');
+  c.innerHTML='<div class="loading"><div class="spin"></div>লোড হচ্ছে...</div>';
+  const titles={overview:['Overview','আপনার account এর সামগ্রিক অবস্থা'],listings:['আমার Listings','সব Free Fire ID listings'],orders:['Orders','সব buy/sell orders'],chats:['Conversations','সব active conversations'],reviews:['Reviews','আপনার received reviews'],favorites:['Favorites','Saved listings']};
+  const[pt,ps]=titles[tab]||['Dashboard',''];
+  const ptEl=document.getElementById('dash-page-title');const psEl=document.getElementById('dash-page-subtitle');
+  if(ptEl)ptEl.textContent=pt;if(psEl)psEl.textContent=ps;
+
+  if(tab==='overview'){
+    const[{data:ml},{data:mo},{data:revs}]=await Promise.all([
+      sb.from('listings').select('id,status').eq('seller_id',curUser.id),
+      sb.from('orders').select('*,listings(title)').or(`buyer_id.eq.${curUser.id},seller_id.eq.${curUser.id}`).order('created_at',{ascending:false}).limit(8),
+      sb.from('reviews').select('rating').eq('reviewed_user_id',curUser.id)
+    ]);
+    const completed=(mo||[]).filter(o=>o.status==='completed');
+    const pending=(mo||[]).filter(o=>o.status==='pending');
+    const activeL=(ml||[]).filter(l=>l.status==='active');
+    const avgR=(revs&&revs.length)?(revs.reduce((s,r)=>s+r.rating,0)/revs.length).toFixed(1):null;
+    c.innerHTML=`
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-bottom:26px">
+        ${[['📋','Active Listings',activeL.length,'var(--primary)','মোট '+(ml||[]).length+'টি'],['📦','Orders',(mo||[]).length,'var(--blue)',pending.length+'টি pending'],['✅','Completed',completed.length,'var(--green)','সফল deals'],['⭐','Rating',avgR||'—','var(--gold)',(revs||[]).length+'টি review']].map(([icon,label,val,clr,sub])=>`
+          <div class="stat-card"><div class="bg-icon">${icon}</div>
+            <div style="font-size:10px;color:var(--sub);font-weight:700;letter-spacing:1.5px;margin-bottom:8px">${label.toUpperCase()}</div>
+            <div style="font-size:30px;font-weight:900;color:${clr};font-family:'Rajdhani',sans-serif">${val}</div>
+            <div style="font-size:11px;color:var(--sub);margin-top:4px">${sub}</div>
+          </div>`).join('')}
+      </div>
+      <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:18px;margin-bottom:20px">
+        <div class="card" style="padding:22px">
+          <div style="font-size:11px;color:var(--sub);font-weight:700;letter-spacing:1.5px;margin-bottom:16px">PROFILE INFO</div>
+          ${[['পুরো নাম',curProfile.full_name||'—'],['Username','@'+curProfile.username],['WhatsApp',curProfile.whatsapp||'—'],['Role',curProfile.role==='admin'?'👑 Admin':'👤 User'],['Joined',new Date(curProfile.created_at).toLocaleDateString('bn-BD')]].map(([k,v])=>`
+            <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px">
+              <span style="color:var(--sub)">${k}</span><span style="font-weight:600">${v}</span>
+            </div>`).join('')}
+          <button class="btn-out" style="width:100%;margin-top:14px;padding:9px;justify-content:center" onclick="go('edit-profile')">✏️ Profile Update</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="card" style="padding:20px">
+            <div style="font-size:11px;color:var(--sub);font-weight:700;letter-spacing:1.5px;margin-bottom:14px">VERIFICATION STATUS</div>
+            ${curProfile.verification_status==='approved'?
+              `<div style="display:flex;align-items:center;gap:10px"><div style="width:44px;height:44px;border-radius:50%;background:#00C85322;border:2px solid var(--green);display:flex;align-items:center;justify-content:center;font-size:20px">✅</div><div><div style="font-weight:700;color:var(--green);font-size:14px">Verified</div><div style="font-size:11px;color:var(--sub);margin-top:2px">Listing ও purchase করতে পারবেন</div></div></div>`:
+              curProfile.verification_status==='rejected'?
+              `<div style="display:flex;align-items:center;gap:10px"><div style="width:44px;height:44px;border-radius:50%;background:#FF444422;border:2px solid var(--red);display:flex;align-items:center;justify-content:center;font-size:20px">❌</div><div><div style="font-weight:700;color:var(--red);font-size:14px">Rejected</div><div style="font-size:11px;color:var(--sub);margin-top:2px">Admin এ যোগাযোগ করুন</div></div></div>`:
+              `<div style="display:flex;align-items:center;gap:10px"><div style="width:44px;height:44px;border-radius:50%;background:#FFD70022;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:20px">⏳</div><div><div style="font-weight:700;color:var(--gold);font-size:14px">Pending</div><div style="font-size:11px;color:var(--sub);margin-top:2px">২৪-৪৮ ঘন্টা অপেক্ষা করুন</div></div></div>`}
+          </div>
+          <div class="card" style="padding:16px">
+            <div style="font-size:11px;color:var(--sub);font-weight:700;letter-spacing:1.5px;margin-bottom:12px">QUICK ACTIONS</div>
+            <button class="btn" style="width:100%;padding:9px;margin-bottom:7px;justify-content:center;font-size:12px" onclick="go('create')">➕ নতুন Listing</button>
+            <button class="btn-out" style="width:100%;padding:9px;margin-bottom:7px;justify-content:center;font-size:12px" onclick="dashTab('listings')">📋 আমার Listings</button>
+            <button class="btn-gray" style="width:100%;padding:9px;border-radius:var(--rs);font-size:12px" onclick="go('marketplace')">🛒 Marketplace</button>
+          </div>
+        </div>
+      </div>
+      ${(mo||[]).length?`<div class="card" style="padding:20px"><div style="font-size:11px;color:var(--sub);font-weight:700;letter-spacing:1.5px;margin-bottom:16px">সাম্প্রতিক ORDERS</div>${mo.slice(0,5).map(o=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)"><div><div style="font-weight:600;font-size:13px">${o.listings?.title||'Order'}</div><div style="font-size:11px;color:var(--sub)">${new Date(o.created_at).toLocaleDateString('bn-BD')}</div></div><div style="display:flex;align-items:center;gap:8px"><span style="color:var(--primary);font-weight:900;font-family:'Rajdhani',sans-serif">৳${(o.amount||0).toLocaleString()}</span><span class="badge ${o.status==='completed'?'badge-green':o.status==='disputed'?'badge-red':'badge-orange'}">${o.status}</span></div></div>`).join('')}<div style="text-align:center;margin-top:12px"><span style="color:var(--primary);cursor:pointer;font-size:13px;font-weight:600" onclick="dashTab('orders')">সব Orders →</span></div></div>`:''}`;
+
+  } else if(tab==='listings'){
+    const{data:ml}=await sb.from('listings').select('*').eq('seller_id',curUser.id).order('created_at',{ascending:false});
+    c.innerHTML=(ml||[]).length?`<div style="display:flex;flex-direction:column;gap:10px">${ml.map(l=>`
+      <div class="card" style="padding:14px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <div style="display:flex;gap:12px;align-items:center">
+          <div style="width:44px;height:44px;border-radius:8px;background:#1A1A1A;display:flex;align-items:center;justify-content:center;font-size:22px">🎮</div>
+          <div>
+            <div style="font-weight:700;font-size:13px">${l.title}</div>
+            <div style="color:var(--sub);font-size:11px;margin-top:2px">৳${(l.price||0).toLocaleString()} • 👁 ${l.views||0} • ${rankBadge(l.rank)}</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap">
+          <span class="badge ${l.status==='active'?'badge-green':l.status==='removed'?'badge-red':'badge-orange'}">${l.status}</span>
+          <button class="btn-sm" style="background:#00BFFF22;color:var(--blue);border:1px solid var(--blue)" onclick="openEditListing(${l.id})">✏️ Edit</button>
+          <button class="btn-sm" style="background:#2A2A2A;color:var(--sub);border:1px solid var(--border)" onclick="pauseListing(${l.id},'${l.status}')">${l.status==='active'?'⏸ Pause':'▶ Activate'}</button>
+        </div>
+      </div>`).join('')}</div>`:`<div class="card2" style="padding:36px;text-align:center"><div style="font-size:48px;margin-bottom:14px">📋</div><div style="font-size:16px;font-weight:700;margin-bottom:8px">কোনো listing নেই</div><div style="color:var(--sub);font-size:13px;margin-bottom:20px">আপনার প্রথম listing পোস্ট করুন!</div><button class="btn" onclick="go('create')">➕ এখনই পোস্ট করুন</button></div>`;
+
+  } else if(tab==='orders'){
+    const{data:mo}=await sb.from('orders').select('*,listings(title,seller_id)').or(`buyer_id.eq.${curUser.id},seller_id.eq.${curUser.id}`).order('created_at',{ascending:false});
+    const steps=['Deal','Payment','ID Verify','Transfer','Complete'];
+    c.innerHTML=(mo||[]).length?mo.map(o=>{
+      const stepDots=steps.map((s,i)=>{
+        const done=i<(o.step||1);
+        return`<div style="flex:1;text-align:center"><div style="height:4px;background:${done?'var(--primary)':'#222'};border-radius:2px;margin-bottom:5px"></div><div style="font-size:9px;color:${done?'var(--primary)':'var(--sub2)'};font-weight:${done?700:400}">${s}</div></div>`;
+      }).join('');
+      return`<div class="card" style="padding:18px;margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+          <div><div style="font-weight:700;font-size:14px">${o.listings?.title||'Order #'+o.id}</div><div style="color:var(--sub);font-size:11px;margin-top:2px">${new Date(o.created_at).toLocaleDateString('bn-BD')} • ${o.buyer_id===curUser.id?'🛒 কিনেছেন':'💰 বিক্রি করেছেন'}</div></div>
+          <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--primary);font-weight:900;font-size:18px;font-family:'Rajdhani',sans-serif">৳${(o.amount||0).toLocaleString()}</span><span class="badge ${o.status==='completed'?'badge-green':o.status==='disputed'?'badge-red':'badge-orange'}">${o.status}</span></div>
+        </div>
+        <div style="display:flex;gap:4px;margin-bottom:12px">${stepDots}</div>
+        ${o.status==='completed'?`<button class="btn-sm" style="background:#FFD70022;color:var(--gold);border:1px solid var(--gold)" onclick="openReviewModal(${o.id},'${o.buyer_id===curUser.id?o.listings?.seller_id||'':o.buyer_id}','এই deal সম্পর্কে rating দিন')">⭐ Review দিন</button>`:''}
+      </div>`;
+    }).join(''):`<div class="card2" style="padding:36px;text-align:center"><div style="font-size:48px;margin-bottom:14px">📦</div><div style="font-weight:700;font-size:16px;margin-bottom:8px">কোনো order নেই</div></div>`;
+
+  } else if(tab==='chats'){
+    const{data:convs}=await sb.from('conversations').select('*,listings(id,title,price,rank),buyer:buyer_id(username),seller:seller_id(username)').or(`buyer_id.eq.${curUser.id},seller_id.eq.${curUser.id}`).order('created_at',{ascending:false});
+    c.innerHTML=(convs||[]).length?`<div style="display:flex;flex-direction:column;gap:10px">${convs.map(cv=>{
+      const isBuyer=cv.buyer_id===curUser.id;
+      const other=isBuyer?cv.seller?.username:cv.buyer?.username;
+      return`<div class="card" style="padding:14px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;cursor:pointer" onclick="openConvFromDash(${cv.id},${cv.listing_id})" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="display:flex;gap:12px;align-items:center">
+          <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#ff8c00);display:flex;align-items:center;justify-content:center;font-size:20px">👤</div>
+          <div><div style="font-weight:700;font-size:13px">@${other||'User'}</div><div style="color:var(--sub);font-size:11px;margin-top:2px">${cv.listings?.title||'Listing'} • ৳${(cv.listings?.price||0).toLocaleString()}</div><span style="font-size:10px;color:${isBuyer?'var(--blue)':'var(--green)'}">${isBuyer?'🛒 Buyer':'💰 Seller'}</span></div>
+        </div>
+        <button class="btn-sm" onclick="event.stopPropagation();openConvFromDash(${cv.id},${cv.listing_id})">💬 Open</button>
+      </div>`;
+    }).join('')}</div>`:`<div class="card2" style="padding:36px;text-align:center"><div style="font-size:48px;margin-bottom:14px">💬</div><div style="font-weight:700;font-size:16px;margin-bottom:8px">কোনো conversation নেই</div></div>`;
+
+  } else if(tab==='reviews'){
+    const{data:revs}=await sb.from('reviews').select('*,reviewer:reviewer_id(username)').eq('reviewed_user_id',curUser.id).order('created_at',{ascending:false});
+    const avg=(revs&&revs.length)?(revs.reduce((s,r)=>s+r.rating,0)/revs.length).toFixed(1):null;
+    const stars=n=>'⭐'.repeat(n)+'☆'.repeat(5-n);
+    c.innerHTML=`
+      ${avg?`<div class="card" style="padding:20px;margin-bottom:16px;display:flex;align-items:center;gap:20px">
+        <div style="text-align:center"><div style="font-size:48px;font-weight:900;color:var(--gold);font-family:'Rajdhani',sans-serif">${avg}</div><div style="font-size:18px">${stars(Math.round(parseFloat(avg)))}</div><div style="color:var(--sub);font-size:12px;margin-top:4px">${revs.length}টি review</div></div>
+        <div style="flex:1">${[5,4,3,2,1].map(n=>{const cnt=(revs||[]).filter(r=>r.rating===n).length;const pct=revs.length?Math.round(cnt/revs.length*100):0;return`<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><div style="font-size:11px;color:var(--sub);width:16px">${n}⭐</div><div class="progress-bar" style="flex:1"><div class="progress-fill" style="width:${pct}%"></div></div><div style="font-size:11px;color:var(--sub);width:26px">${cnt}</div></div>`;}).join('')}</div>
+      </div>`:''}
+      <div style="display:flex;flex-direction:column;gap:10px">
+        ${(revs||[]).length?revs.map(r=>`<div class="card" style="padding:16px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div style="font-weight:700;font-size:13px">@${r.reviewer?.username||'User'}</div><div style="color:var(--gold);font-size:15px">${stars(r.rating)}</div></div>${r.comment?`<p style="color:var(--sub);font-size:13px;line-height:1.6;font-style:italic">"${r.comment}"</p>`:''}<div style="font-size:10px;color:var(--sub2);margin-top:6px">${new Date(r.created_at).toLocaleDateString('bn-BD')}</div></div>`).join(''):`<div class="card2" style="padding:36px;text-align:center"><div style="font-size:48px;margin-bottom:14px">⭐</div><div style="font-weight:700;font-size:16px;margin-bottom:8px">কোনো review নেই</div></div>`}
+      </div>`;
+
+  } else if(tab==='favorites'){
+    const ids=getFavs();
+    if(!ids.length){c.innerHTML=`<div class="card2" style="padding:36px;text-align:center"><div style="font-size:48px;margin-bottom:14px">💔</div><div style="font-weight:700;font-size:16px;margin-bottom:8px">কোনো favorite নেই</div><button class="btn" style="margin-top:12px" onclick="go('marketplace')">🛒 Marketplace Browse করুন</button></div>`;return;}
+    const{data}=await sb.from('listings').select('*,profiles(id,username,verification_status,rating,total_deals)').in('id',ids).eq('status','active');
+    c.innerHTML=`<div class="grid-2">${(data||[]).length?data.map(l=>listingCard(l)).join(''):'<div style="color:var(--sub);font-size:13px;padding:20px">Saved listings পাওয়া যায়নি।</div>'}</div>`;
+  }
+}
+
+async function pauseListing(id,status){
+  const ns=status==='active'?'paused':'active';
+  await sb.from('listings').update({status:ns}).eq('id',id);
+  showToast(ns==='active'?'▶ Activated!':'⏸ Paused!');await dashTab('listings');
+}
+
+// ── PROFILE ─────────────────────────────────────────────────────────────
+async function loadEditProfile(){
+  if(!curProfile)return;
+  const n=document.getElementById('ep-name');const w=document.getElementById('ep-wa');const f=document.getElementById('ep-fb');
+  if(n)n.value=curProfile.full_name||'';if(w)w.value=curProfile.whatsapp||'';if(f)f.value=curProfile.facebook_link||'';
+}
+
+async function saveProfile(){
+  const nm=document.getElementById('ep-name')?.value?.trim();
+  const wa=document.getElementById('ep-wa')?.value?.trim();
+  const fb=document.getElementById('ep-fb')?.value?.trim();
+  const pw=document.getElementById('ep-pass')?.value;
+  await sb.from('profiles').update({full_name:nm,whatsapp:wa,facebook_link:fb}).eq('id',curUser.id);
+  if(pw&&pw.length>=8){await sb.auth.updateUser({password:pw});}
+  showToast('✅ Profile update হয়েছে!');await loadProfile();go('dashboard');
+}
+
+async function viewProfile(uid){
+  if(!uid)return;
+  const[{data:p},{data:listings},{data:revs}]=await Promise.all([
+    sb.from('profiles').select('*').eq('id',uid).single(),
+    sb.from('listings').select('*').eq('seller_id',uid).eq('status','active').order('created_at',{ascending:false}).limit(6),
+    sb.from('reviews').select('rating').eq('reviewed_user_id',uid)
+  ]);
+  if(!p)return;
+  const avgR=(revs&&revs.length)?(revs.reduce((s,r)=>s+r.rating,0)/revs.length).toFixed(1):null;
+  document.getElementById('public-profile-content').innerHTML=`
+    <div class="card" style="padding:24px;margin-bottom:18px">
+      <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">
+        <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#ff8c00);display:flex;align-items:center;justify-content:center;font-size:30px;border:3px solid var(--primary)">👤</div>
+        <div style="flex:1">
+          <div style="font-size:20px;font-weight:800;margin-bottom:4px">${p.full_name||'—'}</div>
+          <div style="color:var(--sub);margin-bottom:10px">@${p.username}</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <span class="badge ${p.verification_status==='approved'?'badge-green':p.verification_status==='rejected'?'badge-red':'badge-gold'}">${p.verification_status==='approved'?'✅ Verified':p.verification_status==='rejected'?'❌ Rejected':'⏳ Pending'}</span>
+            ${p.role==='admin'?'<span class="badge badge-blue">👑 Admin</span>':''}
+            ${sellerLevelBadge(p.total_deals||0)}
+          </div>
+        </div>
+        <div style="display:flex;gap:20px;text-align:center">
+          <div><div style="font-size:24px;font-weight:900;color:var(--primary);font-family:'Rajdhani',sans-serif">${p.total_deals||0}</div><div style="color:var(--sub);font-size:11px">Deals</div></div>
+          <div><div style="font-size:24px;font-weight:900;color:var(--gold);font-family:'Rajdhani',sans-serif">${avgR||'—'}</div><div style="color:var(--sub);font-size:11px">Rating</div></div>
+          <div><div style="font-size:24px;font-weight:900;color:var(--blue);font-family:'Rajdhani',sans-serif">${(revs||[]).length}</div><div style="color:var(--sub);font-size:11px">Reviews</div></div>
+        </div>
+      </div>
+    </div>
+    <h3 style="font-weight:800;font-size:16px;margin-bottom:12px">Active Listings (${(listings||[]).length})</h3>
+    <div class="grid-2">${(listings||[]).length?listings.map(l=>listingCard({...l,profiles:p})).join(''):'<div style="color:var(--sub);font-size:13px;padding:20px">কোনো active listing নেই।</div>'}</div>`;
+  go('profile');
+}
+
+// ── FAVORITES ────────────────────────────────────────────────────────────
+function getFavs(){try{return JSON.parse(localStorage.getItem('fd_favs')||'[]');}catch{return[];}}
+function saveFavs(f){try{localStorage.setItem('fd_favs',JSON.stringify(f));}catch{}}
+function isFav(id){return getFavs().includes(Number(id)||id);}
+function toggleFav(id){
+  const nid=Number(id)||id;let f=getFavs();
+  if(f.includes(nid)){f=f.filter(x=>x!==nid);showToast('💔 Wishlist থেকে সরানো হয়েছে');}
+  else{f.push(nid);showToast('❤️ Wishlist এ যোগ হয়েছে!');}
+  saveFavs(f);
+  const btn=document.getElementById('fav-btn-'+id);
+  if(btn){btn.textContent=isFav(id)?'❤️':'🤍';btn.style.color=isFav(id)?'var(--red)':'#aaa';}
+}
+function toggleFavDetail(id){
+  toggleFav(id);const btn=document.getElementById('fav-detail-btn');
+  if(btn){const f=isFav(id);btn.textContent=f?'❤️ Saved':'🤍 Wishlist এ রাখুন';btn.style.background=f?'#FF444422':'transparent';btn.style.borderColor=f?'var(--red)':'#444';btn.style.color=f?'var(--red)':'#aaa';}
+}
+
+// ── NOTIFICATIONS ────────────────────────────────────────────────────────
+let notifOpen=false;
+async function loadNotifications(){
+  if(!curUser)return;
+  let data=[];
+  try{const res=await sb.from('notifications').select('*').eq('user_id',curUser.id).order('created_at',{ascending:false}).limit(20);data=res.data||[];}catch(e){return;}
+  const list=document.getElementById('notif-list');if(!list)return;
+  const unread=data.filter(n=>!n.is_read);
+  const dot=document.getElementById('notif-dot');const mdot=document.getElementById('m-notif-dot');
+  if(unread.length){if(dot)dot.classList.add('show');if(mdot)mdot.style.display='block';}
+  list.innerHTML=data.length?data.map(n=>`<div class="notif-item ${n.is_read?'':'unread'}" onclick="markNotifRead(${n.id})"><div>${n.message}</div><div class="notif-time" style="font-size:10px;color:var(--sub);margin-top:3px">${timeAgo(n.created_at)}</div></div>`).join(''):`<div style="padding:28px;text-align:center;color:var(--sub);font-size:13px">কোনো notification নেই 🔕</div>`;
+  if(notifSub)notifSub.unsubscribe();
+  try{notifSub=sb.channel('notifs_'+curUser.id).on('postgres_changes',{event:'INSERT',schema:'public',table:'notifications',filter:`user_id=eq.${curUser.id}`},(payload)=>{
+    const dot2=document.getElementById('notif-dot');const mdot2=document.getElementById('m-notif-dot');
+    if(dot2)dot2.classList.add('show');if(mdot2)mdot2.style.display='block';
+    const n=payload.new;
+    const item=document.createElement('div');item.className='notif-item unread';
+    item.innerHTML=`<div>${n.message}</div><div style="font-size:10px;color:var(--sub);margin-top:3px">এইমাত্র</div>`;
+    item.onclick=()=>markNotifRead(n.id);
+    if(list.firstChild)list.insertBefore(item,list.firstChild);
+    showToast('🔔 '+n.message.substring(0,60));
+  }).subscribe();}catch(e){}
+}
+
+async function sendNotif(userId,message){
+  if(!userId||!message)return;
+  try{await sb.from('notifications').insert({user_id:userId,message,is_read:false});}catch(e){}
+}
+
+async function markNotifRead(id){
+  try{await sb.from('notifications').update({is_read:true}).eq('id',id);}catch(e){}
+  const dot=document.getElementById('notif-dot');if(dot)dot.classList.remove('show');
+  loadNotifications();
+}
+
+async function clearNotifs(){
+  if(curUser)try{await sb.from('notifications').update({is_read:true}).eq('user_id',curUser.id);}catch(e){}
+  const dot=document.getElementById('notif-dot');if(dot)dot.classList.remove('show');
+  document.getElementById('notif-dropdown').classList.remove('show');notifOpen=false;
+  loadNotifications();
+}
+
+function toggleNotif(){
+  notifOpen=!notifOpen;
+  const dd=document.getElementById('notif-dropdown');if(dd)dd.classList.toggle('show',notifOpen);
+}
+
+document.addEventListener('click',e=>{
+  if(notifOpen&&!e.target.closest('#notif-bell-btn')&&!e.target.closest('#notif-dropdown')){
+    notifOpen=false;const dd=document.getElementById('notif-dropdown');if(dd)dd.classList.remove('show');
+  }
+});
+
+// ── RATING & REVIEW ──────────────────────────────────────────────────────
+function selectStar(n){
+  document.getElementById('review-rating').value=n;
+  for(let i=1;i<=5;i++){const s=document.getElementById('star-'+i);if(s)s.textContent=i<=n?'⭐':'☆';}
+}
+
+function openReviewModal(orderId,targetId,subtitle){
+  if(!orderId||!targetId||targetId==='undefined'){showToast('❌ Review দিতে পারছি না');return;}
+  document.getElementById('review-order-id').value=orderId;
+  document.getElementById('review-target-id').value=targetId;
+  document.getElementById('review-modal-subtitle').textContent=subtitle||'Deal সম্পর্কে জানান।';
+  for(let i=1;i<=5;i++){const s=document.getElementById('star-'+i);if(s)s.textContent='☆';}
+  document.getElementById('review-rating').value=0;
+  document.getElementById('review-comment').value='';
+  openModal('review-modal');
+}
+
+async function submitReview(){
+  const rating=parseInt(document.getElementById('review-rating').value)||0;
+  if(!rating){showToast('❌ Rating দিন (১-৫ তারা)');return;}
+  const orderId=document.getElementById('review-order-id').value;
+  const targetId=document.getElementById('review-target-id').value;
+  const comment=document.getElementById('review-comment').value.trim();
+  try{
+    const{error}=await sb.from('reviews').insert({reviewer_id:curUser.id,reviewed_user_id:targetId,order_id:orderId,rating,comment});
+    if(error){showToast('❌ '+error.message);return;}
+    const{data:allRevs}=await sb.from('reviews').select('rating').eq('reviewed_user_id',targetId);
+    if(allRevs&&allRevs.length){
+      const avg=Math.round((allRevs.reduce((s,r)=>s+r.rating,0)/allRevs.length)*10)/10;
+      await sb.from('profiles').update({rating:avg,total_deals:allRevs.length}).eq('id',targetId);
+    }
+    await sendNotif(targetId,`⭐ @${curProfile.username} আপনাকে ${rating} তারা rating দিয়েছেন${comment?': "'+comment.substring(0,40)+'"':''}!`);
+    closeModal('review-modal');showToast('✅ Review দেওয়া হয়েছে!');dashTab('orders');
+  }catch(e){showToast('❌ Error: '+e.message);}
+}
+
+// ── SHARE ────────────────────────────────────────────────────────────────
+function openShareModal(){
+  if(!curListing)return;
+  shareUrl=window.location.href.split('?')[0]+'?listing='+curListing.id;
+  const box=document.getElementById('share-link-box');if(box)box.textContent=shareUrl;
+  openModal('share-modal');
+}
+function shareWhatsApp(){window.open('https://wa.me/?text=🔥 FireDeal: '+encodeURIComponent(curListing?.title||'')+' %0A'+encodeURIComponent(shareUrl),'_blank');}
+function shareFacebook(){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(shareUrl),'_blank');}
+function copyShareLink(){navigator.clipboard?.writeText(shareUrl).then(()=>showToast('✅ Link copied!')).catch(()=>showToast('❌ Copy failed'));}
+
+// ── REPORT ────────────────────────────────────────────────────────────────
+function openReportModal(id){
+  if(!curUser){showToast('❌ লগইন করো');go('login');return;}
+  document.getElementById('report-listing-id').value=id;
+  document.getElementById('report-detail').value='';
+  openModal('report-modal');
+}
+
+async function submitReport(){
+  const id=document.getElementById('report-listing-id').value;
+  const reason=document.getElementById('report-reason').value;
+  const detail=document.getElementById('report-detail').value.trim();
+  const{error}=await sb.from('reports').insert({reporter_id:curUser.id,reported_listing_id:id,reason:reason+(detail?' — '+detail:'')});
+  if(error){showToast('❌ '+error.message);return;}
+  closeModal('report-modal');showToast('✅ Report পাঠানো হয়েছে। Admin দেখবেন।');
+}
+
+// ── CONTACT ────────────────────────────────────────────────────────────────
+function submitContact(){
+  const nm=document.getElementById('ct-name')?.value?.trim();
+  const ct=document.getElementById('ct-contact')?.value?.trim();
+  const msg=document.getElementById('ct-msg')?.value?.trim();
+  if(!nm||!ct||!msg){showToast('❌ সব তথ্য পূরণ করো');return;}
+  showToast('✅ Message পাঠানো হয়েছে! ২৪ ঘন্টার মধ্যে reply পাবেন।');
+  ['ct-name','ct-contact','ct-msg'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+}
+
+// ── FAQ ─────────────────────────────────────────────────────────────────
+const FAQS=[
+  ['FireDeal কি সম্পূর্ণ বিনামূল্যে?','হ্যাঁ, রেজিস্ট্রেশন ও browsing বিনামূল্যে। সফল deal এ সামান্য service fee প্রযোজ্য।'],
+  ['Verification কতক্ষণ সময় নেয়?','সাধারণত ২৪–৪৮ ঘন্টার মধ্যে Admin verify করেন।'],
+  ['Deal এ কতক্ষণ সময় লাগে?','সাধারণত ১–৬ ঘন্টার মধ্যে deal সম্পন্ন হয়।'],
+  ['Payment কোন পদ্ধতিতে?','bKash, Nagad, Rocket বা Bank Transfer এ Admin কে payment করতে হয়।'],
+  ['Scam হলে কী করব?','সঙ্গে সঙ্গে Admin কে report করুন। Platform এর বাইরে deal করলে FireDeal দায়ী নয়।'],
+  ['Verified না হলে listing করা যাবে?','না। Scam থেকে সুরক্ষার জন্য শুধুমাত্র Verified users listing ও purchase করতে পারবেন।'],
+  ['ID transfer এর পর সমস্যা হলে?','২৪ ঘন্টার মধ্যে Admin কে জানাতে হবে। Dispute investigation শুরু হবে।'],
+  ['Counter offer কীভাবে পাঠাবো?','Chat page এ "Counter Offer" বাটন চেপে নিজের মূল্য দিন।'],
+  ['Listing share করা যাবে?','হ্যাঁ! Listing page এ Share বাটন দিয়ে WhatsApp ও Facebook এ share করুন।'],
+  ['Review কীভাবে দেওয়া যায়?','Deal Complete হলে Orders tab এ "⭐ Review দিন" বাটন চাপুন।'],
+];
+
+function renderFAQ(){
+  const el=document.getElementById('faq-list');if(!el)return;
+  el.innerHTML=FAQS.map(([q,a],i)=>`
+    <div class="card" style="overflow:hidden">
+      <div style="padding:16px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:14px" onclick="toggleFAQ(${i})">
+        <span>${q}</span><span id="faq-ico-${i}" style="color:var(--primary);font-size:20px;transition:transform .2s">+</span>
+      </div>
+      <div id="faq-ans-${i}" style="display:none;padding:0 20px 16px;color:var(--sub);font-size:13px;line-height:1.8">${a}</div>
+    </div>`).join('');
+}
+function toggleFAQ(i){
+  const ans=document.getElementById('faq-ans-'+i);const ico=document.getElementById('faq-ico-'+i);
+  const open=ans.style.display==='none';
+  ans.style.display=open?'block':'none';
+  ico.textContent=open?'−':'+';
+}
+
+// ── OFFER ────────────────────────────────────────────────────────────────
+async function submitOffer(){
+  if(!curUser){showToast('❌ লগইন করো');closeModal('offer-modal');go('login');return;}
+  const val=document.getElementById('offer-val').value;
+  const note=document.getElementById('offer-note').value.trim();
+  if(!val){showToast('❌ মূল্য দাও');return;}
+  closeModal('offer-modal');
+  await startChat();
+  setTimeout(async()=>{
+    if(curConvId)await sb.from('messages').insert({conversation_id:curConvId,sender_id:curUser.id,content:`💰 Offer: ৳${parseInt(val).toLocaleString()}${note?' — '+note:''}`});
+  },800);
+  showToast('✅ Offer পাঠানো হয়েছে!');
+}
+
+// ── REGISTER STEPS ────────────────────────────────────────────────────────
+function regStep(n){regStepNum=n;updateRegStepUI();}
+function updateRegStepUI(){
+  [1,2,3].forEach(i=>{const s=document.getElementById('reg-step'+i);if(s)s.style.display=i===regStepNum?'block':'none';});
+  const ui=document.getElementById('reg-steps-ui');if(!ui)return;
+  ui.innerHTML=[1,2,3].map(i=>`
+    <div class="step-dot" style="background:${i<=regStepNum?'var(--primary)':'#333'};color:${i<=regStepNum?'#fff':'var(--sub)'}">${i<regStepNum?'✓':i}</div>
+    ${i<3?`<div class="step-line" style="background:${i<regStepNum?'var(--primary)':'#333'}"></div>`:''}`).join('');
+}
+
+// ── ADMIN ─────────────────────────────────────────────────────────────────
+function adminTab(name,el){
+  document.querySelectorAll('.admin-sidebar .s-item').forEach(i=>i.classList.remove('active'));
+  if(el)el.classList.add('active');adminTabName=name;renderAdmin();
+}
+
+async function renderAdmin(){
+  if(!curProfile||curProfile.role!=='admin'){
+    document.getElementById('admin-content').innerHTML='<div style="text-align:center;padding:60px;color:var(--red);font-size:16px">⛔ Admin access নেই।</div>';return;
+  }
+  const c=document.getElementById('admin-content');
+  c.innerHTML='<div class="loading"><div class="spin"></div>লোড হচ্ছে...</div>';
+  if(adminTabName==='dash')await renderAdminDash(c);
+  else if(adminTabName==='users')await renderAdminUsers(c);
+  else if(adminTabName==='listings')await renderAdminListings(c);
+  else if(adminTabName==='orders')await renderAdminOrders(c);
+  else if(adminTabName==='reports')await renderAdminReports(c);
+  else if(adminTabName==='announce')renderAdminAnnounce(c);
+}
+
+async function renderAdminDash(c){
+  const[{count:uc},{count:lc},{count:oc},{count:pc}]=await Promise.all([
+    sb.from('profiles').select('*',{count:'exact',head:true}),
+    sb.from('listings').select('*',{count:'exact',head:true}).eq('status','active'),
+    sb.from('orders').select('*',{count:'exact',head:true}),
+    sb.from('profiles').select('*',{count:'exact',head:true}).eq('verification_status','pending'),
+  ]);
+  const{data:recentO}=await sb.from('orders').select('*,listings(title),buyer:buyer_id(username),seller:seller_id(username)').order('created_at',{ascending:false}).limit(6);
+  const{data:pendingU}=await sb.from('profiles').select('*').eq('verification_status','pending').order('created_at',{ascending:false}).limit(4);
+  c.innerHTML=`
+    <h2 style="font-size:20px;font-weight:800;margin-bottom:20px">📊 Admin Dashboard</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-bottom:26px">
+      ${[['👥','Total Users',uc||0,'var(--blue)'],['📋','Active Listings',lc||0,'var(--primary)'],['📦','Total Orders',oc||0,'var(--gold)'],['⏳','Pending Verify',pc||0,'var(--red)']].map(([i,l,v,clr])=>`
+        <div class="stat-card"><div class="bg-icon">${i}</div>
+          <div style="font-size:10px;color:var(--sub);font-weight:700;letter-spacing:1.5px;margin-bottom:8px">${l.toUpperCase()}</div>
+          <div style="font-size:30px;font-weight:900;color:${clr};font-family:'Rajdhani',sans-serif">${v}</div>
+        </div>`).join('')}
+    </div>
+    <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:18px">
+      <div>
+        <h3 style="font-weight:700;margin-bottom:12px;font-size:15px">📦 সাম্প্রতিক Orders</h3>
+        ${(recentO||[]).map(o=>`<div class="card" style="padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:7px">
+          <div><div style="font-weight:600;font-size:13px">${o.listings?.title||'?'}</div><div style="color:var(--sub);font-size:11px">@${o.buyer?.username||'?'} → @${o.seller?.username||'?'}</div></div>
+          <div style="display:flex;gap:7px;align-items:center">
+            <span style="color:var(--primary);font-weight:900;font-family:'Rajdhani',sans-serif">৳${(o.amount||0).toLocaleString()}</span>
+            <span class="badge ${o.status==='completed'?'badge-green':'badge-orange'}">${o.status}</span>
+            <button class="btn-sm" onclick="adminUpdateOrder(${o.id},'completed')" ${o.status==='completed'?'disabled':''}>✅</button>
+          </div>
+        </div>`).join('')||'<div style="color:var(--sub);font-size:13px">কোনো order নেই।</div>'}
+      </div>
+      <div>
+        <h3 style="font-weight:700;margin-bottom:12px;font-size:15px">⏳ Pending Verification</h3>
+        ${(pendingU||[]).map(u=>`<div class="card" style="padding:14px;margin-bottom:8px">
+          <div style="font-weight:600;font-size:13px">${u.full_name||'—'}</div>
+          <div style="color:var(--sub);font-size:11px;margin:4px 0">@${u.username} • 📱 ${u.whatsapp||'—'}</div>
+          ${u.facebook_link?`<a href="${u.facebook_link}" target="_blank" style="color:var(--blue);font-size:11px">🔗 Facebook</a>`:''}
+          <div style="display:flex;gap:6px;margin-top:8px">
+            <button class="btn-green" onclick="adminVerify('${u.id}','approved')">✅ Approve</button>
+            <button class="btn-red" onclick="adminVerify('${u.id}','rejected')">❌ Reject</button>
+          </div>
+        </div>`).join('')||'<div style="color:var(--sub);font-size:13px;padding:20px;text-align:center">সব ঠিকঠাক ✅</div>'}
+      </div>
+    </div>`;
+}
+
+async function renderAdminUsers(c){
+  const{data:users}=await sb.from('profiles').select('*').order('created_at',{ascending:false});
+  c.innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:8px">
+      <h2 style="font-size:20px;font-weight:800">👥 User Management</h2>
+      <div style="display:flex;gap:8px">
+        <span class="badge badge-gold">⏳ Pending: ${(users||[]).filter(u=>u.verification_status==='pending').length}</span>
+        <span class="badge badge-green">✅ Approved: ${(users||[]).filter(u=>u.verification_status==='approved').length}</span>
+      </div>
+    </div>
+    ${(users||[]).map(u=>`<div class="card" style="padding:16px;margin-bottom:10px">
+      <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+        <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#ff8c00);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">👤</div>
+        <div style="flex:1">
+          <div style="font-weight:700;font-size:14px">${u.full_name||'—'} <span style="color:var(--sub);font-weight:400">@${u.username}</span> ${u.role==='admin'?'<span class="badge badge-blue">👑 Admin</span>':''}</div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:5px">
+            <span style="font-size:12px;color:var(--sub)">📱 ${u.whatsapp||'—'}</span>
+            ${u.facebook_link?`<a href="${u.facebook_link}" target="_blank" style="color:var(--blue);font-size:12px">🔗 Facebook</a>`:''}
+            <span style="font-size:12px;color:var(--sub)">📅 ${new Date(u.created_at).toLocaleDateString()}</span>
+            <span style="font-size:12px;color:var(--sub)">⭐${u.rating||0} • ${u.total_deals||0} deals</span>
+          </div>
+          <span class="badge ${u.verification_status==='approved'?'badge-green':u.verification_status==='rejected'?'badge-red':'badge-gold'}" style="margin-top:8px">${u.verification_status}</span>
+          <div style="display:flex;gap:7px;margin-top:10px;flex-wrap:wrap">
+            ${u.verification_status==='pending'?`<button class="btn-green" onclick="adminVerify('${u.id}','approved')">✅ Approve</button><button class="btn-red" onclick="adminVerify('${u.id}','rejected')">❌ Reject</button>`:''}
+            ${u.verification_status==='approved'?`<button class="btn-red" onclick="adminVerify('${u.id}','rejected')">⛔ Suspend</button>`:''}
+            ${u.verification_status==='rejected'?`<button class="btn-green" onclick="adminVerify('${u.id}','approved')">✅ Re-approve</button>`:''}
+            ${u.role!=='admin'?`<button class="btn-sm" style="background:#00BFFF22;color:var(--blue);border:1px solid var(--blue)" onclick="adminMakeAdmin('${u.id}')">👑 Admin করো</button>`:''}
+            <button class="btn-sm" style="background:#2A2A2A;color:var(--sub);border:1px solid var(--border)" onclick="adminSendNotif('${u.id}')">🔔 Notify</button>
+          </div>
+        </div>
+      </div>
+    </div>`).join('')}`;
+}
+
+async function renderAdminListings(c){
+  const{data:list}=await sb.from('listings').select('*,profiles(username)').order('created_at',{ascending:false});
+  c.innerHTML=`<h2 style="font-size:20px;font-weight:800;margin-bottom:18px">📋 Listing Management (${(list||[]).length}টি)</h2>
+  ${(list||[]).map(l=>`<div class="card" style="padding:12px 16px;margin-bottom:8px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+    <div style="font-size:26px">🎮</div>
+    <div style="flex:1"><div style="font-weight:600;font-size:13px">${l.title}</div><div style="color:var(--sub);font-size:11px;margin-top:2px">@${l.profiles?.username||'?'} • ৳${(l.price||0).toLocaleString()} • 👁 ${l.views||0} • ${rankBadge(l.rank)}</div></div>
+    <span class="badge ${l.status==='active'?'badge-green':l.status==='removed'?'badge-red':'badge-orange'}">${l.status}</span>
+    <button class="btn-sm" style="background:#FFD70022;color:var(--gold);border:1px solid var(--gold)" onclick="adminFeatureListing(${l.id})">⭐ Feature</button>
+    <button class="btn-red" onclick="adminRemoveListing(${l.id})">🗑 Remove</button>
+  </div>`).join('')}`;
+}
+
+async function renderAdminOrders(c){
+  const{data:orders}=await sb.from('orders').select('*,listings(title,id),buyer:buyer_id(username),seller:seller_id(username)').order('created_at',{ascending:false});
+  const steps=['Deal','Payment','ID Verify','Transfer','Complete'];
+  c.innerHTML=`<h2 style="font-size:20px;font-weight:800;margin-bottom:18px">📦 Order Management</h2>
+  ${(orders||[]).map(o=>{
+    const stepBars=steps.map((s,i)=>{
+      const done=i<(o.step||1);
+      return`<div style="flex:1;text-align:center"><div style="height:4px;background:${done?'var(--primary)':'#222'};border-radius:2px;margin-bottom:5px"></div><div style="font-size:9px;color:${done?'var(--primary)':'var(--sub2)'};font-weight:${done?700:400}">${s}</div></div>`;
+    }).join('');
+    return`<div class="card" style="padding:18px;margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:7px;margin-bottom:12px">
+        <div><div style="font-weight:700;font-size:14px">${o.listings?.title||'?'}</div><div style="color:var(--sub);font-size:11px">@${o.buyer?.username||'?'} → @${o.seller?.username||'?'} • ${new Date(o.created_at).toLocaleDateString()}</div></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--primary);font-weight:900;font-size:18px;font-family:'Rajdhani',sans-serif">৳${(o.amount||0).toLocaleString()}</span><span class="badge ${o.status==='completed'?'badge-green':o.status==='disputed'?'badge-red':'badge-orange'}">${o.status}</span></div>
+      </div>
+      <div style="display:flex;gap:3px;margin-bottom:14px">${stepBars}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn-green" onclick="adminUpdateOrderStep(${o.id},${(o.step||1)+1})" ${(o.step||1)>=5?'disabled':''}>➡️ Next Step</button>
+        <button class="btn-sm" style="background:#00BFFF22;color:var(--blue);border:1px solid var(--blue)" onclick="adminSendOrderMsg(${o.id},${o.listings?.id||'null'},'${o.buyer_id}','${o.seller_id}')">💬 Message</button>
+        ${o.status!=='completed'?`<button class="btn-green" onclick="adminUpdateOrder(${o.id},'completed')">✅ Complete</button>`:'<span class="badge badge-green">✅ Completed</span>'}
+        <button class="btn-red" onclick="adminUpdateOrder(${o.id},'disputed')">⚠️ Dispute</button>
+      </div>
+    </div>`;
+  }).join('')||'<div class="card2" style="padding:24px;text-align:center;color:var(--sub)">কোনো order নেই।</div>'}`;
+}
+
+async function renderAdminReports(c){
+  const{data:reports}=await sb.from('reports').select('*,reporter:reporter_id(username),listing:reported_listing_id(title)').order('created_at',{ascending:false});
+  c.innerHTML=`<h2 style="font-size:20px;font-weight:800;margin-bottom:18px">🚨 Reports & Flags</h2>
+  ${(reports||[]).map(r=>`<div class="card" style="padding:16px;margin-bottom:10px;border-left:3px solid var(--red);border-radius:0 12px 12px 0">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:5px;margin-bottom:7px">
+      <span style="font-weight:700;font-size:13px">🚨 ${r.listing?.title||'User Report'}</span>
+      <span style="font-size:11px;color:var(--sub)">${new Date(r.created_at).toLocaleDateString()}</span>
+    </div>
+    <div style="color:var(--sub);font-size:12px;margin-bottom:11px">Reporter: @${r.reporter?.username||'?'} — "${r.reason}"</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn-red" onclick="adminActionReport('${r.id}')">🚫 Action নাও</button>
+      <button class="btn-gray" onclick="adminDismissReport('${r.id}')">✖ Dismiss</button>
+    </div>
+  </div>`).join('')||'<div class="card2" style="padding:36px;text-align:center;color:var(--sub)">কোনো pending report নেই ✅</div>'}`;
+}
+
+function renderAdminAnnounce(c){
+  c.innerHTML=`<h2 style="font-size:20px;font-weight:800;margin-bottom:18px">📢 Announcement</h2>
+  <div class="card" style="padding:24px">
+    <div class="form-group"><label>Announcement Text</label><textarea id="ann-input" placeholder="যেমনঃ 🔥 নতুন feature চালু হয়েছে!..." style="height:100px"></textarea></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" style="flex:1;justify-content:center" onclick="publishAnnouncement()">📢 Publish করুন</button>
+      <button class="btn-red" onclick="hideAnnouncement()">✕ সরিয়ে দাও</button>
+    </div>
+  </div>`;
+}
+
+function publishAnnouncement(){
+  const txt=document.getElementById('ann-input')?.value?.trim();if(!txt){showToast('❌ কিছু লিখুন');return;}
+  const bar=document.getElementById('announcement-bar');const at=document.getElementById('ann-text');
+  if(bar&&at){at.textContent=txt;bar.style.display='block';}
+  showToast('✅ Announcement publish হয়েছে!');
+}
+function hideAnnouncement(){const bar=document.getElementById('announcement-bar');if(bar)bar.style.display='none';showToast('✅ সরানো হয়েছে');}
+
+// Admin Actions
+async function adminVerify(uid,status){
+  await sb.from('profiles').update({verification_status:status}).eq('id',uid);
+  await sendNotif(uid,status==='approved'?'🎉 আপনার account verify হয়েছে! এখন listing ও purchase করতে পারবেন।':'❌ দুঃখিত, আপনার account reject হয়েছে। Support এ যোগাযোগ করুন।');
+  showToast(status==='approved'?'✅ User Approved!':'❌ User Rejected!');renderAdmin();
+}
+async function adminMakeAdmin(uid){
+  await sb.from('profiles').update({role:'admin',verification_status:'approved'}).eq('id',uid);
+  await sendNotif(uid,'👑 আপনাকে FireDeal Admin করা হয়েছে!');
+  showToast('👑 Admin করা হয়েছে!');renderAdmin();
+}
+async function adminSendNotif(uid){
+  const msg=prompt('User কে notification পাঠান:');if(!msg)return;
+  await sendNotif(uid,msg);showToast('🔔 Notification পাঠানো হয়েছে!');
+}
+async function adminRemoveListing(id){
+  await sb.from('listings').update({status:'removed'}).eq('id',id);showToast('🗑 Listing সরানো হয়েছে');renderAdmin();
+}
+async function adminFeatureListing(id){
+  try{await sb.from('listings').update({featured:true}).eq('id',id);showToast('⭐ Featured!');}catch(e){showToast('❌ Error');}
+}
+async function adminUpdateOrder(id,status){
+  await sb.from('orders').update({status}).eq('id',id);
+  if(status==='completed'){
+    const{data:o}=await sb.from('orders').select('buyer_id,seller_id,listings(title)').eq('id',id).single();
+    if(o){
+      await sendNotif(o.buyer_id,`✅ আপনার order "${o.listings?.title}" complete হয়েছে!`);
+      await sendNotif(o.seller_id,`💰 "${o.listings?.title}" এর payment release হয়েছে!`);
+    }
+  }
+  showToast('✅ Order updated!');renderAdmin();
+}
+async function adminUpdateOrderStep(id,step){
+  if(step>5)return;
+  await sb.from('orders').update({step}).eq('id',id);showToast('➡️ Step updated!');renderAdmin();
+}
+async function adminSendOrderMsg(orderId,listingId,buyerId,sellerId){
+  const msg=prompt('Buyer ও Seller কে message পাঠান:');if(!msg||!listingId)return;
+  let{data:conv}=await sb.from('conversations').select('id').eq('listing_id',listingId).eq('buyer_id',buyerId).single();
+  if(!conv){const{data:nc}=await sb.from('conversations').insert({listing_id:listingId,buyer_id:buyerId,seller_id:sellerId}).select().single();conv=nc;}
+  if(!conv)return;
+  await sb.from('messages').insert({conversation_id:conv.id,sender_id:curUser.id,content:msg,is_admin:true});
+  showToast('✅ Admin message পাঠানো হয়েছে!');
+}
+async function adminDismissReport(id){
+  await sb.from('reports').update({status:'dismissed'}).eq('id',id);showToast('Report dismiss হয়েছে');renderAdmin();
+}
+async function adminActionReport(id){
+  await sb.from('reports').update({status:'actioned'}).eq('id',id);showToast('🚫 Action নেওয়া হয়েছে');renderAdmin();
+}
+
+// ── MODAL ─────────────────────────────────────────────────────────────────
+function openModal(id){const m=document.getElementById(id);if(m)m.classList.add('show');}
+function closeModal(id){const m=document.getElementById(id);if(m)m.classList.remove('show');}
+function closeAllModals(){document.querySelectorAll('.modal-overlay.show').forEach(m=>m.classList.remove('show'));}
+document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show');});});
+
+// ── TOAST ─────────────────────────────────────────────────────────────────
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';
+  t.style.borderColor=msg.startsWith('❌')?'var(--red)':msg.startsWith('⚠️')?'var(--gold)':'var(--primary)';
+  clearTimeout(window._tt);window._tt=setTimeout(()=>t.style.display='none',3400);
+}
+
+// ── HELPERS ───────────────────────────────────────────────────────────────
+function timeAgo(d){
+  const diff=(Date.now()-new Date(d).getTime())/1000;
+  if(diff<60)return'এইমাত্র';if(diff<3600)return Math.floor(diff/60)+' মিনিট আগে';
+  if(diff<86400)return Math.floor(diff/3600)+' ঘন্টা আগে';return Math.floor(diff/86400)+' দিন আগে';
+}
+
+function checkDeepLink(){
+  const lid=new URLSearchParams(window.location.search).get('listing');
+  if(lid)setTimeout(()=>openListing(parseInt(lid)),1200);
+}
+
+// ── START ─────────────────────────────────────────────────────────────────
+initApp();
+checkDeepLink();
+</script>
+</body>
+</html>
