@@ -974,7 +974,9 @@
             }
         }
 
-        body{padding-bottom:80px!important}
+        body {
+            padding-bottom: 80px !important
+        }
     </style>
 </head>
 
@@ -2026,6 +2028,10 @@
             document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
             const na = document.getElementById('nav-' + page); if (na) na.classList.add('active');
             window.scrollTo(0, 0); closeAllModals();
+
+            // Browser history update করো
+            history.pushState({ page }, '', '#' + page);
+
             if (page === 'home') renderHome();
             if (page === 'marketplace') renderMarketplace();
             if (page === 'listing') renderListing();
@@ -2036,6 +2042,28 @@
             if (page === 'faq') renderFAQ();
             if (page === 'edit-profile') loadEditProfile();
         }
+
+        // Browser back/forward button handle করো
+        window.addEventListener('popstate', (e) => {
+            if (e.state && e.state.page) {
+                const page = e.state.page;
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                const el = document.getElementById('page-' + page); if (el) el.classList.add('active');
+                document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+                const na = document.getElementById('nav-' + page); if (na) na.classList.add('active');
+                window.scrollTo(0, 0);
+                if (page === 'home') renderHome();
+                if (page === 'marketplace') renderMarketplace();
+                if (page === 'listing') renderListing();
+                if (page === 'chat') loadChatMsgs();
+                if (page === 'dashboard') renderDashboard();
+                if (page === 'admin') renderAdmin();
+                if (page === 'faq') renderFAQ();
+            } else {
+                // কোনো state নেই — home এ যাও
+                go('home');
+            }
+        });
 
         // ── AUTH ─────────────────────────────────────────────────────────────────
         showToast('✅ সফলভাবে লগইন হয়েছে!');
