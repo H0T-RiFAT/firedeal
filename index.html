@@ -2060,8 +2060,9 @@
                 if (page === 'admin') renderAdmin();
                 if (page === 'faq') renderFAQ();
             } else {
-                // কোনো state নেই — home এ যাও
-                go('home');
+                const hash = window.location.hash.replace('#', '');
+                if (hash) go(hash);
+                else go('home');
             }
         });
 
@@ -3418,7 +3419,7 @@
         // ── START ─────────────────────────────────────────────────────────────────
         initApp();
         checkDeepLink();
-
+        history.replaceState({ page: 'home' }, '', '#home');
         function setMobileTab(el) {
             document.querySelectorAll('#mobile-dash-tabs .m-tab').forEach(t => t.classList.remove('active'));
             el.classList.add('active');
